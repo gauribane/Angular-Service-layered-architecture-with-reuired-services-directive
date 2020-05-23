@@ -1,0 +1,1180 @@
+<div class="white-box mr-b20 req-card-tabs">
+	<mat-tab-group class="trans-tab pd30 justify-content line-align"  animationDuration="0ms" style="margin-left: 10px;"
+		mat-stretch-tabs dynamicHeight>
+		<mat-tab label="User Details" >
+			<div class="row">
+				<div class="edit-container-inner col-sm-12 mr-t30 mx-auto">
+					<div class="">
+						<form [formGroup]="editprofile" class="row" *ngIf="userOldData">
+							<div class="col-sm-4 mr-b50">
+								<div class="profile-box">
+									<div class="imgClass edit-p-box">
+										<div class="b-profile">
+											<img src="{{ userProfile?.image || this.commonService.defaultImage}}"
+												class="imgSize">
+											<div *ngIf="userProfile?.image" class="trash-icon" (click)="deleteimage.click()">
+												<i class="fa fa-trash" aria-hidden="true"></i>
+											</div>
+											<button  data-toggle="modal" type="" #deleteimage
+												(click)="deleteImage('user')" hidden>
+											</button>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-12 icon brs-btn mr-t50" (click)="crop.click()">
+											Upload
+											<i class="fa fa-camera" aria-hidden="true"></i>
+											<button data-toggle="modal" type="" #crop href="#imageCrop" class="edit"
+												hidden>
+											</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-8">
+								<div class="row profile-f-wrap">
+									<div class="col-sm-6">
+										<div class="d-block">
+											<label>
+												{{localDataService.Firstname.label}} </label>
+											<mat-form-field class="formfield-full-width" appearance="outline">
+												<input matInput autocomplete="off" appAvoidSpace
+												name="firstname" [(ngModel)]="userOldData.firstname"
+													(change)="flagSetAsUpdated($event)" [formControl]="firstname">
+													
+												<mat-error *ngIf="firstname.hasError('required') ">
+													{{localDataService.Firstname.requiredError}}
+
+												</mat-error>
+												<mat-error *ngIf=" firstname.hasError('pattern') ">
+													{{ localDataService.Firstname.patternError }}
+												</mat-error>
+												<mat-error
+													*ngIf="firstname.hasError('minlength') && !firstname.hasError('required') ">
+													{{ localDataService.Firstname.minlengthError }}
+												</mat-error>
+												<mat-error
+													*ngIf="firstname.hasError('maxlength') && !firstname.hasError('required')">
+													{{ localDataService.Firstname.maxlengthError }}
+												</mat-error>
+											</mat-form-field>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="d-block">
+											<label>
+												{{localDataService.Middlename.label}} </label>
+											<mat-form-field class="formfield-full-width" appearance="outline">
+												<input matInput autocomplete="off" [(ngModel)]="userOldData.middlename"
+												appAvoidSpace name="middlename"
+													(change)="flagSetAsUpdated($event)" [formControl]="middlename">
+												<mat-error *ngIf="middlename.hasError('required') ">
+													{{localDataService.Middlename.requiredError}}
+
+												</mat-error>
+												<mat-error *ngIf=" middlename.hasError('pattern') ">
+													{{ localDataService.Middlename.patternError }}
+												</mat-error>
+												<mat-error
+													*ngIf="middlename.hasError('minlength') && !middlename.hasError('required') ">
+													{{ localDataService.Middlename.minlengthError }}
+												</mat-error>
+												<mat-error
+													*ngIf="middlename.hasError('maxlength') && !middlename.hasError('required')">
+													{{ localDataService.Middlename.maxlengthError }}
+												</mat-error>
+											</mat-form-field>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="d-block">
+											<label>
+												{{localDataService.Lastname.label}} </label>
+											<mat-form-field class="formfield-full-width" appearance="outline">
+												<input matInput autocomplete="off" appAvoidSpace
+												name="lastname" [(ngModel)]="userOldData.lastname"
+													(change)="flagSetAsUpdated($event)" [formControl]="lastname">
+												<mat-error *ngIf="lastname.hasError('required')">
+													{{ localDataService.Lastname.requiredError }}
+												</mat-error>
+												<mat-error *ngIf="lastname.hasError('pattern')">
+													{{ localDataService.Lastname.patternError }}
+												</mat-error>
+												<mat-error
+													*ngIf="lastname.hasError('minlength') && !lastname.hasError('required')">
+													{{ localDataService.Lastname.minlengthError }}
+												</mat-error>
+												<mat-error
+													*ngIf="lastname.hasError('maxlength') && !lastname.hasError('required')">
+													{{ localDataService.Lastname.maxlengthError }}
+												</mat-error>
+											</mat-form-field>
+										</div>
+									</div>
+
+									<div class="col-sm-6">
+										<label> {{localDataService.Email.label}} </label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<!-- <mat-label>{{localDataService.Email.label}}</mat-label> -->
+											<input matInput class="" autocomplete="off" type="email" 
+												 name="email"  disabled 
+												[(ngModel)]="userOldData.email" [formControl]="email">
+											
+										</mat-form-field>
+									</div>
+
+									<div class="col-sm-6">
+										<label> Date of Birth </label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<input matInput [max]="currentDate" [matDatepicker]="picker"
+												[(ngModel)]="userOldData.date_of_birth"
+												(change)="flagSetAsUpdated($event)" [formControl]="dob" (click)="picker.open()" readonly required>
+											<mat-datepicker-toggle matSuffix [for]="picker">
+											</mat-datepicker-toggle>
+											<mat-datepicker #picker></mat-datepicker>
+											<mat-error *ngIf="!dob.hasError('required')">
+												Please enter a date of birth
+											</mat-error>
+											<mat-error *ngIf="dob.hasError('required')">
+												Please enter a date of birth
+											</mat-error>
+										</mat-form-field>
+									</div>
+
+									
+								
+									<div class="col-sm-6 genderClass">
+										<label> Gender </label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<mat-select [(ngModel)]="userOldData.gender" [formControl]="gender"
+												(ngModelChange)="flagSetAsUpdated()" matNativeControl required>
+												<mat-option [value]="" hidden></mat-option>
+												<mat-option *ngFor="let gender of genderList" [value]="gender.value">
+													{{gender.type}}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+									<div class="col-sm-6" *ngIf="commonService.loggedInUser.role_type == 'Provider'">
+										<label> Add Title / Description </label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<input matInput type="text" autocomplete="off"
+												[(ngModel)]="userOldData.title" (change)="flagSetAsUpdated($event)"
+												[formControl]="title">
+											<mat-hint  class="color-blue">e.g surgeon,specialist...</mat-hint>
+											<mat-error *ngIf="title.hasError('pattern')">
+												{{ localDataService.Title.patternError }}
+											</mat-error>
+										</mat-form-field>
+									</div>
+									<div class="col-sm-6" *ngIf="commonService.loggedInUser.role_type == 'Provider'">
+										<label> Speciality </label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<input matInput type="text" autocomplete="off"
+												[(ngModel)]="userOldData.speciality" (change)="flagSetAsUpdated($event)"
+												[formControl]="speciality">
+											<mat-hint class="color-blue">e.g emergency...</mat-hint>
+											<mat-error *ngIf="speciality.hasError('pattern')">
+												{{ localDataService.Speciality.patternError }}
+											</mat-error>
+										</mat-form-field>
+									</div>
+									<div class="col-sm-6" *ngIf="commonService.loggedInUser.role_type == 'Provider'">
+										<label> Sub-Speciality </label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<input matInput type="text" autocomplete="off"
+												[(ngModel)]="userOldData.subspeciality"
+												(change)="flagSetAsUpdated($event)" [formControl]="subspeciality">
+											<mat-error *ngIf="subspeciality.hasError('pattern')">
+												{{ localDataService.subspeciality.patternError }}
+											</mat-error>
+										</mat-form-field>
+									</div>
+
+									<div class="col-sm-6">
+										<label> {{ localDataService.Address_Line1.label }}</label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<input matInput type="text" [(ngModel)]="userOldData.address_line1"
+												autocomplete="off" [formControl]="address_line1" required>
+											<mat-error *ngIf="address_line1.hasError('required')">
+												{{ localDataService.Address_Line1.requiredError }}
+											</mat-error>
+										</mat-form-field>
+									</div>
+
+									<div class="col-sm">
+										<label> {{ localDataService.Address_Line2.label }} </label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<input matInput type="text" [(ngModel)]="userOldData.address_line2"
+												placeholder="Address Line 2" autocomplete="off" value=""
+												[formControl]="address_line2">
+										</mat-form-field>
+									</div>
+
+									<div class="col-sm-12">
+										
+										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length==0"  [formControl]="country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.country_id" [(ngModel)]="userOldData.country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'state_id','country','User')" ></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length!=0" [formControl]="country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.country_id" [(ngModel)]="userOldData.country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'state_id','country','User')" ></app-single-mat-select-search-common> 
+									
+									</div>
+									
+						  
+
+									<div class="col-sm-12">
+										<app-single-mat-select-search-common *ngIf="stateList.length!=0"  [requiredFlag]="stateList.length==0?false:true" required="stateList.length==0?true:true" [caller]="true"   [formControl]="state" [disabledFlag]="stateList.length==0?true:false" [records]="stateList" [recordType]="'state'" [defaultValue]="userOldData.state_id" [(ngModel)]="userOldData.state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'city_id','state','User')" ></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="stateList.length==0"  [requiredFlag]="stateList.length==0?false:true" required="stateList.length==0?true:true" [caller]="true"   [formControl]="state" [disabledFlag]="stateList.length==0?true:false" [records]="stateList" [recordType]="'state'" [defaultValue]="userOldData.state_id" [(ngModel)]="userOldData.state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'city_id','state','User')"></app-single-mat-select-search-common>
+									
+									</div>
+
+									<div class="col-sm-12">
+										<app-single-mat-select-search-common *ngIf="cityList.length!=0" [caller]="true"   [formControl]="city"  [disabledFlag]="cityList.length==0?true:false"  [requiredFlag]="cityList.length==0?false:true" required="cityList.length==0?false:true" [records]="cityList" [recordType]="'city'" [defaultValue]="userOldData.city_id" [(ngModel)]="userOldData.city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'city_id','city','User')"></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="cityList.length==0"  [caller]="true"   [formControl]="city"  [disabledFlag]="cityList.length==0?true:false"  [requiredFlag]="cityList.length==0?false:true" required="cityList.length==0?false:true" [records]="cityList" [recordType]="'city'" [defaultValue]="userOldData.city_id" [(ngModel)]="userOldData.city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'city_id','city','User')"></app-single-mat-select-search-common>
+									
+									</div>
+
+									
+										 <div class="col-sm-12">
+											<label>{{localDataService.Phone.label}}</label>
+										<div class="country-flag-wrap">
+										  <mat-form-field class="d-block flag-input" appearance="outline">
+							
+											<mat-select formControlName="country_code"
+											  [ngModel]="userOldData.mobile_country?userOldData.mobile_country:userOldData.country_id"
+											  (ngModelChange)="userOldData.mobile_country=$event" matNativeControl required>
+											  <mat-select-trigger title="{{getData(userOldData.mobile_country)?.phone_code}}">
+												<span
+												  class="flag-icon flag-icon-{{ getData(userOldData.mobile_country)?.iso2 | lowercase}}">
+												</span>
+												{{getData(userOldData.mobile_country)?.iso2}}
+												
+											  </mat-select-trigger>
+											  <mat-option *ngFor="let country of countryList" [value]="country.id">
+												<span class="flag-icon flag-icon-squared flag-icon-{{ country?.iso2 | lowercase}}"></span>
+												{{country?.iso2}} {{country?.phone_code}}
+											  </mat-option>
+											</mat-select>
+							
+										  </mat-form-field>
+							
+										  <mat-form-field class="d-block mobile-form-fild" appearance="outline">
+											
+											
+											<input matInput class="" autocomplete="off" type="text" [maxlength]="localDataService.Phone.maxlength"
+											  [minlength]="localDataService.Phone.minlength" [pattern]="localDataService.Phone.pattern" appAvoidCharacter
+											  (ngModelChange)="userOldData.mobile_number=maskMobileNumber($event)"
+											  [formControl]="phone" [ngModel]="userOldData.mobile_number" required>
+											  
+											  <mat-error *ngIf="!phone.hasError('required')">
+												  Please enter a phone number
+											  </mat-error>
+											  <mat-error *ngIf="phone.hasError('required')">
+												  Phone number <strong>required</strong>
+											  </mat-error>
+											  <mat-error *ngIf="phone.hasError('maxlength')">
+												  {{ localDataService.Phone.maxlengthError }}
+											  </mat-error>
+											  <mat-error *ngIf="phone.hasError('minlength')">
+												  {{ localDataService.Phone.minlengthError }}
+											  </mat-error>
+											  <mat-error *ngIf="phone.hasError('pattern')">
+												  {{ localDataService.Phone.patternError }}
+											  </mat-error>
+										  </mat-form-field>
+										</div>
+									  </div>
+							
+									  <div class="col-sm-12">
+										<label>{{localDataService.Landline.label}}</label>
+										<mat-form-field class="d-block flag-span-wrap" appearance="outline">
+										  
+										  <span matPrefix class="prefix-align flag-span" title="{{getData(userOldData.country_id)?.phone_code}}">
+											<span class="flag-icon flag-icon-{{ getData(userOldData.country_id)?.iso2 | lowercase}}">
+											</span>
+											{{getData(userOldData.country_id)?.iso2}}
+											
+							
+										  </span>
+										  <!-- pattern="^\((\d{3})\)\s?(\d{3})-\s?(\d{4})$"  -->
+										  <input matInput class="" autocomplete="off" type="text"
+											[placeholder]="localDataService.Landline.placeholder" [maxlength]="localDataService.Landline.maxlength"
+											[minlength]="localDataService.Landline.minlength" [pattern]="localDataService.Landline.pattern" appAvoidCharacter
+											(ngModelChange)="userOldData.landline=maskLandlineNumber($event)"
+											[formControl]="landline" [ngModel]="userOldData.landline">
+										  <!-- <mat-error
+											> -->
+											<mat-error *ngIf="landline.hasError(required)">
+											  {{localDataService.Landline.requiredError}}
+											</mat-error>
+											<mat-error *ngIf="landline.hasError(minlength)">
+											  {{localDataService.Landline.minlengthError}}
+											</mat-error>
+											<mat-error *ngIf="landline.hasError(maxlength)">
+											  {{localDataService.Landline.maxlengthError}}
+											</mat-error>
+											<mat-error *ngIf="landline.hasError(pattern)">
+											  {{localDataService.Landline.patternError}}
+											</mat-error>
+										</mat-form-field>
+									  </div>
+									
+
+									<div class="col-sm-12">
+										<div class="d-block">
+											<label> About me </label>
+											<mat-form-field class="formfield-full-width" appearance="outline">
+												<textarea matInput autocomplete="off" rows="5"
+													[(ngModel)]="userOldData.about_me"
+													(change)="flagSetAsUpdated($event)"
+													[formControl]="aboutme"></textarea>
+												<mat-error *ngIf="aboutme.hasError('required')">
+													Please enter valid about me
+												</mat-error>
+											</mat-form-field>
+										</div>
+									</div>
+
+									<div class="col-sm-12"
+										*ngIf="this.commonService.loggedInUser.role_type =='Provider'">
+										<label>Practitioner Certificate</label>
+										<div class="pd-b10 pd-t10" hidden>
+											<div class="col-sm-10">
+												<input appearance="outline" type="file" maxnum="3"
+													[formControl]="certificates" #fileUpload
+													(change)="uploadCertificate($event)" placeholder="Upload file..."
+													multiple />
+											</div>
+										</div>
+										<div class="text-center cer-menu-wrap pd-b10 pd-t10">
+											<div class="member-profile flex-direction-row max-auto"
+												*ngFor="let file of uploadFile; let i=index">
+												<button #close class="close" (click)="delete(i)" hidden> Delete
+												</button>
+												<div class="overlay-image mr0"
+													*ngIf="file.file_type!='application/pdf'">
+													<img class="imageSize mr-b10 pdf" [src]="file.certificate"
+														*ngIf="file.file_type!='application/pdf'">
+													<div class="text">
+														<h6 class="header pd10">{{ file.certificate_name }} </h6>
+														<a data-toggle="modal" (click)="preview(i)"
+															href="#myModalImage">
+															Preview
+														</a>
+													</div>
+												</div>
+												<div class="overlay-image mr0"
+													*ngIf="file.file_type == 'application/pdf'">
+													<object class="imageSize mr-b20 pdf" type="application/pdf"
+														[attr.data]="file.image2"
+														*ngIf="file.file_type!='application/png' || file.file_type!= 'application/jpeg'"></object>
+													<div class="text">
+														<h6 class="header pd10">{{ file.certificate_name }} </h6>
+														<a data-toggle="modal" (click)="preview(i)" href="#myModal">
+															Preview
+														</a>
+													</div>
+												</div>
+
+												<div class="icon-close">
+													<i class="fa fa-window-close" aria-hidden="true"
+														(click)="close.click()"></i>
+												</div>
+											</div>
+											<div class="member-profile upload-container">
+												<div class="" (click)="fileUpload.click()">
+													<img class="upload-img" src="/assets/images/upload-icon.svg" alt="">
+													<h6 class="header">UPLOAD </h6>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-sm-12">
+										<div class="text-center">
+											<button type="submit" class="blue-btn pd-l30 pd-r30"
+												(click)="editOnSubmit(editprofile)" [disabled]="!editprofile.valid">
+												Update
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</mat-tab>
+
+		<mat-tab label="Password Change" #tabdata>
+			<div class="row">
+				<div class="edit-container-inner col-sm-10 mr-t30 mx-auto">
+					<div class="">
+						<form [formGroup]="passwordUpdateData" class="example-form" *ngIf="userOldData">
+
+							
+
+							 <label> {{localDataService.Password.label}}</label>
+							<mat-form-field class="formfield-full-width d-block" appearance="outline">
+								<input autocomplete="off" matInput type="password"
+									placeholder="Old Password" formControlName="password"
+									[pattern]="localDataService.Password.pattern"
+                                    [minlength]="localDataService.Password.minlength"
+                                    [maxlength]="localDataService.Password.maxlength" autocomplete="off"
+									[(ngModel)]="userOldData.password" id="passwordContent" required (keyup)="chekcksOldPasswordValidation()">
+									<mat-icon (click)="viewOtptext('Old Password')"  matSuffix>{{visibilityIconForOld}}</mat-icon>
+								<!-- <mat-hint class="color-blue">{{localDataService.Password.patternError}}</mat-hint> -->
+								<mat-error
+									*ngIf="!passwordUpdateData.controls['password'].valid && passwordUpdateData.controls['password'].touched">
+									<span *ngIf="passwordUpdateData?.controls?.password?.errors.required">
+										{{localDataService.Password.requiredError}}
+									</span>
+									<span *ngIf="passwordUpdateData?.controls?.password?.errors.minlength">
+										{{localDataService.Password.minlengthError}}
+									</span>
+									<span *ngIf="passwordUpdateData?.controls?.password?.errors.maxlength">
+										{{localDataService.Password.maxlengthError}}
+									</span>
+									<span *ngIf="passwordUpdateData?.controls?.password?.errors.pattern">
+										{{localDataService.Password.patternError}}
+									</span>
+									
+									<!-- {{ getErrorPassword() }} -->
+								</mat-error> 
+							</mat-form-field>
+
+							<label> New Password </label>
+							<div class="form-field">
+								<mat-form-field class="formfield-full-width" appearance="outline">
+									<input type="password" autocomplete="off" matInput placeholder="New Password"
+										(change)="passwordFlag()" formControlName="new_password" id="new-password"
+										[pattern]="localDataService.Password.pattern"
+                                    [minlength]="localDataService.Password.minlength" 
+                                    [maxlength]="localDataService.Password.maxlength" autocomplete="off"
+										[(ngModel)]="userOldData.new_password" (keyup)="chekcksOldPasswordValidation()"
+										required>
+										<mat-icon (click)="viewOtptext('New Password')"  matSuffix>{{visibilityIconForNew}}</mat-icon>
+									<mat-hint *ngIf="!oldPassFlag;else other_content" class="color-blue">Hint : {{localDataService.Password.patternError}}</mat-hint>
+									<ng-template #other_content><mat-hint class="color-red">New Password and Old password should be different.</mat-hint></ng-template>
+									<mat-error
+										*ngIf="(!passwordUpdateData.controls['new_password'].valid && passwordUpdateData.controls['new_password'].touched) || passwordUpdateData.hasError('same')">
+										
+										<span *ngIf="passwordUpdateData?.controls?.new_password?.errors?.required">
+											{{localDataService.Password.requiredError}}
+										</span>
+										<span *ngIf="passwordUpdateData?.controls?.new_password?.errors?.minlength">
+											{{localDataService.Password.minlengthError}}
+										</span>
+										<span *ngIf="passwordUpdateData?.controls?.new_password?.errors?.maxlength">
+											{{localDataService.Password.maxlengthError}}
+										</span>
+										<span *ngIf="passwordUpdateData?.controls?.new_password?.errors?.pattern">
+											{{localDataService.Password.patternError}}
+										</span>
+										<!-- <span *ngIf="oldPassFlag">
+											New Password and Old password should be different.
+										</span> -->
+										<!-- {{ getErrorPassword() }} -->
+									</mat-error>
+									
+								</mat-form-field>
+							</div>
+
+							<label> Confrim New Password</label>
+							<div>
+								<mat-form-field class="formfield-full-width" appearance="outline">
+									<input autocomplete="off" type="password" matInput placeholder="Confirm Password" id="confirm-password"
+										formControlName="confirmpassword" [errorStateMatcher]="matcher">
+										<mat-icon (click)="viewOtptext('Confirm Password')"  matSuffix>{{visibilityIconForConfirm}}</mat-icon>
+										
+									<mat-error *ngIf="passwordUpdateData.hasError('notSame')">
+										{{ localDataService.Password.passwordNotMatch }}
+									</mat-error>
+								</mat-form-field>
+							</div> 
+							<div class="text-center">
+								<button type="submit" (click)="passwordOnSubmit(passwordUpdateData)"
+									[disabled]="!passwordUpdateData.valid || oldPassFlag" class="blue-btn">
+									Update
+								</button>
+							</div>
+						</form>
+
+
+					</div>
+				</div>
+			</div>
+		</mat-tab>
+
+		<mat-tab  [label]="this.commonService.loggedInUser.role_name =='Hospital Admin'? 'Health System Details':'E-Clinic Details'" *ngIf="this.commonService.loggedInUser.role_name =='Hospital Admin' || this.commonService.loggedInUser.role_name== 'eClinic Admin'">
+			<div class="row">
+				<div class="edit-container-inner col-sm-12 mr-t30 mx-auto">
+					<div class="" *ngIf="userOldData">
+						<form [formGroup]="hospitaldetails" class="row" #hospitalRegistration *ngIf="this.commonService.loggedInUser.role_name =='Hospital Admin'">
+							<div class="col-sm-4 mr-b50">
+								<div class="profile-box">
+									<div class="imgClass edit-p-box">
+										<div class="b-profile">
+											<img src="{{ hospital_logo?.logo_image || this.commonService.defaultLogoImage}}"
+												class="logoSize">
+											<div *ngIf="hospital_logo.logo_image" class="trash-icon-hospital" (click)="deleteimage.click()">
+												<i class="fa fa-trash" aria-hidden="true"></i>
+											</div>
+											<button data-toggle="modal" type="" #deleteimage
+												(click)="deleteImage('hospital')" hidden></button>
+										</div>
+									</div>
+									<div class="icon brs-btn mr-t50" (click)="crop.click()">
+										Upload
+										<i class="fa fa-camera" aria-hidden="true"></i>
+										<button data-toggle="modal" type="" #crop href="#hospitalImageCrop" class="edit"
+											hidden></button>
+									</div>
+
+								</div>
+							</div>
+							<!-- pd-t80 -->
+							<div class="col-sm-8 ">
+								<div class="row profile-f-wrap">
+									<div class="col-sm-12">
+										<!-- <div class="col-sm-6"> -->
+											<label>Health System</label>
+											<mat-form-field class="d-block" appearance="outline">
+												
+												<input matInput class="" autocomplete="off" type="text" appAvoidSpace
+												(change)="flagSetAsUpdatedForHospital($event)"
+												[formControl]="_name" [(ngModel)]="userOldData.name"
+													required [maxlength]="localDataService.HealthSystem.maxlength"
+													[minlength]="localDataService.HealthSystem.minlength">
+													<mat-error
+													>
+													<!-- *ngIf="(hospitaldetails.controls._name.touched || hospitaldetails.controls._name.dirty) && hospitaldetails.controls._name.errors" -->
+													<span *ngIf="_name.hasError('required')" >
+														{{localDataService.HealthSystem.requiredError}}
+													</span>
+													<span *ngIf="_name.hasError('minlength')" >
+														{{localDataService.HealthSystem.minlengthError}}
+													</span>
+													<span *ngIf="_name.hasError('maxlength')">
+														{{localDataService.HealthSystem.maxlengthError}}
+													</span>
+													<span *ngIf="_name.hasError('pattern')" >
+														{{localDataService.HealthSystem.patternError}}
+													</span>
+												</mat-error>
+											</mat-form-field>
+										<!-- </div> -->
+										<!-- <div class="d-block">
+											<label>
+												Hospital name </label>
+											<mat-form-field class="formfield-full-width" appearance="outline">
+												<input matInput autocomplete="off" [(ngModel)]="userOldData.name"
+													(change)="flagSetAsUpdatedForHospital($event)"
+													[formControl]="_name">
+											</mat-form-field>
+										</div> -->
+									</div>
+
+									<div class="col-sm-12">
+										<label> {{localDataService.Email.label}} </label>
+										<mat-form-field class="d-block" appearance="outline">
+											<input matInput class="" autocomplete="off" type="email" 
+												 name="email"  disabled 
+												[(ngModel)]="userOldData.email" [formControl]="email">
+											
+										</mat-form-field>
+									</div>
+
+									
+
+
+									<div class="col-sm-12">
+										<label>{{ localDataService.Address_Line1.label }}</label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<input matInput type="text" autocomplete="off"
+												[(ngModel)]="userOldData.hospital_address_line1"
+												[formControl]="hospital_address_line1" required>
+											<mat-error *ngIf="hospital_address_line1.hasError('required')">
+												{{ localDataService.Address_Line1.requiredError }}
+											</mat-error>
+										</mat-form-field>
+									</div>
+
+									<div class="col-sm-12">
+										<label>{{ localDataService.Address_Line2.label }}</label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<input matInput type="text" [(ngModel)]="userOldData.hospital_address_line2"
+												placeholder="Address Line 2" autocomplete="off" value=""
+												[formControl]="hospital_address_line2">
+										</mat-form-field>
+									</div>
+									<div class="col-sm-12">
+										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length==0"  [formControl]="hospital_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.hospital_country_id" [(ngModel)]="userOldData.hospital_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'hospital_state_id','country',null)" ></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length!=0" [formControl]="hospital_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.hospital_country_id" [(ngModel)]="userOldData.hospital_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'hospital_state_id','country',null)" ></app-single-mat-select-search-common> 
+									</div>
+
+									<div class="col-sm-12">
+										<app-single-mat-select-search-common *ngIf="stateListForHospital.length!=0"  [requiredFlag]="stateListForHospital.length==0?false:true" required="stateListForHospital.length==0?true:true" [caller]="true"   [formControl]="hospital_state" [disabledFlag]="stateListForHospital.length==0?true:false" [records]="stateListForHospital" [recordType]="'state'" [defaultValue]="userOldData.hospital_state_id" [(ngModel)]="userOldData.hospital_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'hospital_city_id','state',null)" ></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="stateListForHospital.length==0"  [requiredFlag]="stateListForHospital.length==0?false:true" required="stateListForHospital.length==0?true:true" [caller]="true"   [formControl]="hospital_state" [disabledFlag]="stateListForHospital.length==0?true:false" [records]="stateListForHospital" [recordType]="'state'" [defaultValue]="userOldData.hospital_state_id" [(ngModel)]="userOldData.hospital_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'hospital_city_id','state',null)"></app-single-mat-select-search-common>
+									</div>
+
+									<div class="col-sm-12">
+										<app-single-mat-select-search-common *ngIf="cityListForHospital.length!=0" [caller]="true"   [formControl]="hospital_city"  [disabledFlag]="cityListForHospital.length==0?true:false"  [requiredFlag]="cityListForHospital.length==0?false:true" required="cityListForHospital.length==0?false:true" [records]="cityListForHospital" [recordType]="'city'" [defaultValue]="userOldData.hospital_city_id" [(ngModel)]="userOldData.hospital_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'hospital_city_id','city',null)"></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="cityListForHospital.length==0"  [caller]="true"   [formControl]="hospital_city"  [disabledFlag]="cityListForHospital.length==0?true:false"  [requiredFlag]="cityListForHospital.length==0?false:true" required="cityListForHospital.length==0?false:true" [records]="cityListForHospital" [recordType]="'city'" [defaultValue]="userOldData.hospital_city_id" [(ngModel)]="userOldData.hospital_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'hospital_city_id','city',null)"></app-single-mat-select-search-common>
+									
+									</div>
+							
+									  <div class="col-sm-12">
+										<label>{{localDataService.Landline.label}}</label>
+										<mat-form-field class="d-block flag-span-wrap" appearance="outline">
+										  
+										  <span matPrefix class="prefix-align flag-span" title="{{getData(userOldData.hospital_country_id)?.phone_code}}">
+											<span class="flag-icon flag-icon-{{ getData(userOldData.hospital_country_id)?.iso2 | lowercase}}">
+											</span>
+											{{getData(userOldData.hospital_country_id)?.iso2}}
+											
+							
+										  </span>
+										  <!-- pattern="^\((\d{3})\)\s?(\d{3})-\s?(\d{4})$"  -->
+										  <input matInput class="" autocomplete="off" type="text"
+											[placeholder]="localDataService.Landline.placeholder" appAvoidCharacter [maxlength]="localDataService.Landline.maxlength"
+											[minlength]="localDataService.Landline.minlength" [pattern]="localDataService.Landline.pattern"
+											(ngModelChange)="userOldData.hospital_landline=maskLandlineNumber($event)"
+											[formControl]="hospital_landline" [ngModel]="userOldData.hospital_landline">
+										  <mat-error
+											>
+											<span *ngIf="hospital_landline.hasError(required)">
+											  {{localDataService.Landline.requiredError}}
+											</span>
+											<span *ngIf="hospital_landline.hasError(minlength)">
+											  {{localDataService.Landline.minlengthError}}
+											</span>
+											<span *ngIf="hospital_landline.hasError(maxlength)">
+											  {{localDataService.Landline.maxlengthError}}
+											</span>
+											<span *ngIf="hospital_landline.hasError(pattern)">
+											  {{localDataService.Landline.patternError}}
+											</span>
+										  </mat-error>
+										</mat-form-field>
+									  </div>
+							
+									  <!-- <div class="col-sm-12">
+							
+										<mat-form-field class="d-block flag-span-wrap" appearance="outline">
+										  <mat-label>{{localDataService.Faxnumber.label}}</mat-label>
+										  <span matPrefix class="prefix-align">
+											<span class="flag-icon flag-icon-{{ getData(addOrUpdateEClinic.clinic_country_id)?.iso2 | lowercase}}">
+											</span>
+											{{getData(addOrUpdateEClinic.clinic_country_id)?.iso2}}
+											{{getData(addOrUpdateEClinic.clinic_country_id)?.phone_code}}
+										  </span>
+									
+										  <input matInput class="" autocomplete="off" type="text" [pattern]="localDataService.Faxnumber.pattern"
+											(ngModelChange)="addOrUpdateEClinic.clinic_fax_number=maskLandlineNumber($event)"
+											[ngModel]="addOrUpdateEClinic.clinic_fax_number" formControlName="Faxnumber" required>
+										  <mat-error
+											*ngIf="(addPCPClinicForm.controls.Faxnumber.touched || addPCPClinicForm.controls.Faxnumber.dirty) && addPCPClinicForm.controls.Faxnumber.errors">
+											<span *ngIf="addPCPClinicForm.controls.Faxnumber.errors.required">
+											  {{localDataService.Faxnumber.requiredError}}
+											</span>
+											<span *ngIf="addPCPClinicForm.controls.Faxnumber.errors.minlength">
+											  {{localDataService.Faxnumber.minlengthError}}
+											</span>
+											<span *ngIf="addPCPClinicForm.controls.Faxnumber.errors.maxlength">
+											  {{localDataService.Faxnumber.maxlengthError}}
+											</span>
+											<span *ngIf="addPCPClinicForm.controls.Faxnumber.errors.pattern">
+											  {{localDataService.Faxnumber.patternError}}
+											</span>
+										  </mat-error>
+										</mat-form-field>
+									  </div> -->
+
+									<div class="col-sm-12">
+										<label>{{localDataService.Faxnumber.label}}</label>
+										<mat-form-field class="d-block flag-span-wrap" appearance="outline">
+											<span matPrefix class="prefix-align flag-span" title="{{getData(userOldData.hospital_country_id)?.phone_code}}">
+												<span class="flag-icon flag-icon-{{ getData(userOldData.hospital_country_id)?.iso2 | lowercase}}">
+												</span>
+												{{getData(userOldData.hospital_country_id)?.iso2}}
+												
+											  </span>
+											<input matInput class="" autocomplete="off" type="text" [maxlength]="localDataService.Faxnumber.maxlength"
+											[minlength]="localDataService.Faxnumber.minlength" [pattern]="localDataService.Faxnumber.pattern"
+											[formControl]="Faxnumber" (ngModelChange)="userOldData.fax_number=maskLandlineNumber($event)" [ngModel]="userOldData.fax_number" required>
+											<mat-error
+												>
+											
+												<span *ngIf="Faxnumber.hasError('required')" >
+													{{localDataService.Faxnumber.requiredError}}
+												</span>
+												<span *ngIf="Faxnumber.hasError('minlength')" >
+													{{localDataService.Faxnumber.minlengthError}}
+												</span>
+												<span *ngIf="Faxnumber.hasError('maxlength')">
+													{{localDataService.Faxnumber.maxlengthError}}
+												</span>
+												<span *ngIf="Faxnumber.hasError('pattern')" >
+													{{localDataService.Faxnumber.patternError}}
+												</span>
+											</mat-error>
+										</mat-form-field>
+									</div>
+
+									<div class="col-sm-3">
+										<div class="d-block">
+											<label> Primary Colour </label>
+											<input (change)="flagSetAsUpdatedForHospital()"
+												[(colorPicker)]="old_primary_color"
+												[style.background]="old_primary_color"
+												(cpInputChange)="setPrimaryColor('cpInputChange', $event)"
+												(cpSliderDragStart)="setPrimaryColor('cpSliderDragStart', $event)"
+												(cpSliderDragEnd)="setPrimaryColor('cpSliderDragEnd', $event)"
+												(colorPickerChange)="colorChangePrimary($event)" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="d-block">
+											<label> Secondary Colour </label>
+											<input (change)="flagSetAsUpdatedForHospital()"
+												[(colorPicker)]="old_secondary_color"
+												[style.background]="old_secondary_color"
+												(cpInputChange)="setSecondaryColor('cpInputChange', $event)"
+												(cpSliderDragStart)="setSecondaryColor('cpSliderDragStart', $event)"
+												(cpSliderDragEnd)="setSecondaryColor('cpSliderDragEnd', $event)"
+												(colorPickerChange)="colorChangeSecondary($event)" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="d-block">
+											<label> Text Colour </label>
+											<input (change)="flagSetAsUpdatedForHospital()"
+												[(colorPicker)]="old_text_color" [style.background]="old_text_color"
+												(cpInputChange)="setTextColor('cpInputChange', $event)"
+												(cpSliderDragStart)="setTextColor('cpSliderDragStart', $event)"
+												(cpSliderDragEnd)="setTextColor('cpSliderDragEnd', $event)"
+												(colorPickerChange)="colorChangeText($event)" />
+										</div>
+									</div>
+
+
+									<div class="col-sm-12 pd-t20">
+										<div class="text-center">
+											<button type="submit" class="blue-btn hospital-update pd-l30 pd-r30"
+												(click)="editHospitalDetails(hospitaldetails)"
+												[disabled]="!hospitaldetails.valid">
+												Update
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+						<form [formGroup]="hospitaldetails" class="row" #hospitalRegistration *ngIf="this.commonService.loggedInUser.role_name =='eClinic Admin'">
+							<div class="col-sm-4 mr-b50">
+								<div class="profile-box">
+									<div class="imgClass edit-p-box">
+										<div class="b-profile">
+											<img src="{{ hospital_logo?.logo_image || this.commonService.defaultLogoImage}}"
+												class="logoSize">
+											<div *ngIf="hospital_logo.logo_image" class="trash-icon-hospital" (click)="deleteimage.click()">
+												<i class="fa fa-trash" aria-hidden="true"></i>
+											</div>
+											<button data-toggle="modal" type="" #deleteimage
+												(click)="deleteImage('hospital')" hidden></button>
+										</div>
+									</div>
+									<div class="icon brs-btn mr-t50" (click)="crop.click()">
+										Upload
+										<i class="fa fa-camera" aria-hidden="true"></i>
+										<button data-toggle="modal" type="" #crop href="#hospitalImageCrop" class="edit"
+											hidden></button>
+									</div>
+
+								</div>
+							</div>
+							<!-- pd-t80 -->
+							<div class="col-sm-8 ">
+								<div class="row profile-f-wrap">
+									<div class="col-sm-12">
+										<!-- <div class="col-sm-6"> -->
+											<label>E Clinic Name</label>
+											<mat-form-field class="d-block" appearance="outline">
+												
+												<input matInput class="" autocomplete="off" type="text" appAvoidSpace
+												(change)="flagSetAsUpdatedForHospital($event)"
+												[formControl]="_name" [(ngModel)]="userOldData.clinic_name"
+													required [maxlength]="localDataService.HealthSystem.maxlength"
+													[minlength]="localDataService.HealthSystem.minlength">
+													<mat-error
+													>
+													<!-- *ngIf="(hospitaldetails.controls._name.touched || hospitaldetails.controls._name.dirty) && hospitaldetails.controls._name.errors" -->
+													<span *ngIf="_name.hasError('required')" >
+														{{localDataService.HealthSystem.requiredError}}
+													</span>
+													<span *ngIf="_name.hasError('minlength')" >
+														{{localDataService.HealthSystem.minlengthError}}
+													</span>
+													<span *ngIf="_name.hasError('maxlength')">
+														{{localDataService.HealthSystem.maxlengthError}}
+													</span>
+													<span *ngIf="_name.hasError('pattern')" >
+														{{localDataService.HealthSystem.patternError}}
+													</span>
+												</mat-error>
+											</mat-form-field>
+										<!-- </div> -->
+										<!-- <div class="d-block">
+											<label>
+												Hospital name </label>
+											<mat-form-field class="formfield-full-width" appearance="outline">
+												<input matInput autocomplete="off" [(ngModel)]="userOldData.name"
+													(change)="flagSetAsUpdatedForHospital($event)"
+													[formControl]="_name">
+											</mat-form-field>
+										</div> -->
+									</div>
+
+									<div class="col-sm-12">
+										<label> {{localDataService.Email.label}} </label>
+										<mat-form-field class="d-block" appearance="outline">
+											<input matInput class="" autocomplete="off" type="email" 
+												 name="email"  disabled 
+												[(ngModel)]="userOldData.email" [formControl]="email">
+											
+										</mat-form-field>
+									</div>
+
+									
+
+
+									<div class="col-sm-12">
+										<label>{{ localDataService.Address_Line1.label }}</label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<input matInput type="text" autocomplete="off"
+												[(ngModel)]="userOldData.clinic_address_line1"
+												[formControl]="hospital_address_line1" required>
+											<mat-error *ngIf="hospital_address_line1.hasError('required')">
+												{{ localDataService.Address_Line1.requiredError }}
+											</mat-error>
+										</mat-form-field>
+									</div>
+
+									<div class="col-sm-12">
+										<label>{{ localDataService.Address_Line2.label }}</label>
+										<mat-form-field class="formfield-full-width" appearance="outline">
+											<input matInput type="text" [(ngModel)]="userOldData.clinic_address_line2"
+												placeholder="Address Line 2" autocomplete="off" value=""
+												[formControl]="hospital_address_line2">
+										</mat-form-field>
+									</div>
+
+
+
+									
+									<div class="col-sm-12">
+										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length==0"  [formControl]="hospital_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.clinic_country_id" [(ngModel)]="userOldData.clinic_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'clinic_state_id','country',null)" ></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length!=0" [formControl]="hospital_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.clinic_country_id" [(ngModel)]="userOldData.clinic_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'clinic_state_id','country',null)" ></app-single-mat-select-search-common> 
+									</div>
+
+									<div class="col-sm-12">
+										<app-single-mat-select-search-common *ngIf="stateListForHospital.length!=0"  [requiredFlag]="stateListForHospital.length==0?false:true" required="stateListForHospital.length==0?true:true" [caller]="true"   [formControl]="hospital_state" [disabledFlag]="stateListForHospital.length==0?true:false" [records]="stateListForHospital" [recordType]="'state'" [defaultValue]="userOldData.clinic_state_id" [(ngModel)]="userOldData.clinic_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'clinic_city_id','state',null)" ></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="stateListForHospital.length==0"  [requiredFlag]="stateListForHospital.length==0?false:true" required="stateListForHospital.length==0?true:true" [caller]="true"   [formControl]="hospital_state" [disabledFlag]="stateListForHospital.length==0?true:false" [records]="stateListForHospital" [recordType]="'state'" [defaultValue]="userOldData.clinic_state_id" [(ngModel)]="userOldData.clinic_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'clinic_city_id','state',null)"></app-single-mat-select-search-common>
+									</div>
+
+									<div class="col-sm-12">
+										<app-single-mat-select-search-common *ngIf="cityListForHospital.length!=0" [caller]="true"   [formControl]="hospital_city"  [disabledFlag]="cityListForHospital.length==0?true:false"  [requiredFlag]="cityListForHospital.length==0?false:true" required="cityListForHospital.length==0?false:true" [records]="cityListForHospital" [recordType]="'city'" [defaultValue]="userOldData.clinic_city_id" [(ngModel)]="userOldData.clinic_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'clinic_city_id','city',null)"></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="cityListForHospital.length==0"  [caller]="true"   [formControl]="hospital_city"  [disabledFlag]="cityListForHospital.length==0?true:false"  [requiredFlag]="cityListForHospital.length==0?false:true" required="cityListForHospital.length==0?false:true" [records]="cityListForHospital" [recordType]="'city'" [defaultValue]="userOldData.clinic_city_id" [(ngModel)]="userOldData.clinic_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'clinic_city_id','city',null)"></app-single-mat-select-search-common>
+									
+									</div>
+							
+							
+									  <div class="col-sm-12">
+										<label>{{localDataService.Landline.label}}</label>
+										<mat-form-field class="d-block flag-span-wrap" appearance="outline">
+										  
+										  <span matPrefix class="prefix-align flag-span" title="{{getData(userOldData.clinic_country_id)?.phone_code}}">
+											<span class="flag-icon flag-icon-{{ getData(userOldData.clinic_country_id)?.iso2 | lowercase}}">
+											</span>
+											{{getData(userOldData.clinic_country_id)?.iso2}}
+											
+							
+										  </span>
+										  <!-- pattern="^\((\d{3})\)\s?(\d{3})-\s?(\d{4})$"  -->
+										  <input matInput class="" autocomplete="off" type="text"
+											[placeholder]="localDataService.Landline.placeholder" appAvoidCharacter [maxlength]="localDataService.Landline.maxlength"
+											[minlength]="localDataService.Landline.minlength" [pattern]="localDataService.Landline.pattern"
+											(ngModelChange)="userOldData.clinic_landline=maskLandlineNumber($event)"
+											[formControl]="hospital_landline" [ngModel]="userOldData.clinic_landline">
+										  <mat-error
+											>
+											<span *ngIf="hospital_landline.hasError(required)">
+											  {{localDataService.Landline.requiredError}}
+											</span>
+											<span *ngIf="hospital_landline.hasError(minlength)">
+											  {{localDataService.Landline.minlengthError}}
+											</span>
+											<span *ngIf="hospital_landline.hasError(maxlength)">
+											  {{localDataService.Landline.maxlengthError}}
+											</span>
+											<span *ngIf="hospital_landline.hasError(pattern)">
+											  {{localDataService.Landline.patternError}}
+											</span>
+										  </mat-error>
+										</mat-form-field>
+									  </div>
+							
+									  <!-- <div class="col-sm-12">
+							
+										<mat-form-field class="d-block flag-span-wrap" appearance="outline">
+										  <mat-label>{{localDataService.Faxnumber.label}}</mat-label>
+										  <span matPrefix class="prefix-align">
+											<span class="flag-icon flag-icon-{{ getData(addOrUpdateEClinic.clinic_country_id)?.iso2 | lowercase}}">
+											</span>
+											{{getData(addOrUpdateEClinic.clinic_country_id)?.iso2}}
+											{{getData(addOrUpdateEClinic.clinic_country_id)?.phone_code}}
+										  </span>
+									
+										  <input matInput class="" autocomplete="off" type="text" [pattern]="localDataService.Faxnumber.pattern"
+											(ngModelChange)="addOrUpdateEClinic.clinic_fax_number=maskLandlineNumber($event)"
+											[ngModel]="addOrUpdateEClinic.clinic_fax_number" formControlName="Faxnumber" required>
+										  <mat-error
+											*ngIf="(addPCPClinicForm.controls.Faxnumber.touched || addPCPClinicForm.controls.Faxnumber.dirty) && addPCPClinicForm.controls.Faxnumber.errors">
+											<span *ngIf="addPCPClinicForm.controls.Faxnumber.errors.required">
+											  {{localDataService.Faxnumber.requiredError}}
+											</span>
+											<span *ngIf="addPCPClinicForm.controls.Faxnumber.errors.minlength">
+											  {{localDataService.Faxnumber.minlengthError}}
+											</span>
+											<span *ngIf="addPCPClinicForm.controls.Faxnumber.errors.maxlength">
+											  {{localDataService.Faxnumber.maxlengthError}}
+											</span>
+											<span *ngIf="addPCPClinicForm.controls.Faxnumber.errors.pattern">
+											  {{localDataService.Faxnumber.patternError}}
+											</span>
+										  </mat-error>
+										</mat-form-field>
+									  </div> -->
+
+									<div class="col-sm-12">
+										<label>{{localDataService.Faxnumber.label}}</label>
+										<mat-form-field class="d-block flag-span-wrap" appearance="outline">
+											<span matPrefix class="prefix-align flag-span" title="{{getData(userOldData.clinic_country_id)?.phone_code}}">
+												<span class="flag-icon flag-icon-{{ getData(userOldData.clinic_country_id)?.iso2 | lowercase}}">
+												</span>
+												{{getData(userOldData.clinic_country_id)?.iso2}}
+												
+											  </span>
+											<input matInput class="" autocomplete="off" type="text" [maxlength]="localDataService.Faxnumber.maxlength"
+											[minlength]="localDataService.Faxnumber.minlength" [pattern]="localDataService.Faxnumber.pattern"
+											[formControl]="Faxnumber" (ngModelChange)="userOldData.clinic_fax_number=maskLandlineNumber($event)" [ngModel]="userOldData.clinic_fax_number" required>
+											<mat-error
+												>
+											
+												<span *ngIf="Faxnumber.hasError('required')" >
+													{{localDataService.Faxnumber.requiredError}}
+												</span>
+												<span *ngIf="Faxnumber.hasError('minlength')" >
+													{{localDataService.Faxnumber.minlengthError}}
+												</span>
+												<span *ngIf="Faxnumber.hasError('maxlength')">
+													{{localDataService.Faxnumber.maxlengthError}}
+												</span>
+												<span *ngIf="Faxnumber.hasError('pattern')" >
+													{{localDataService.Faxnumber.patternError}}
+												</span>
+											</mat-error>
+										</mat-form-field>
+									</div>
+
+									<div class="col-sm-3">
+										<div class="d-block">
+											<label> Primary Colour </label>
+											<input (change)="flagSetAsUpdatedForHospital()"
+												[(colorPicker)]="old_primary_color"
+												[style.background]="old_primary_color"
+												(cpInputChange)="setPrimaryColor('cpInputChange', $event)"
+												(cpSliderDragStart)="setPrimaryColor('cpSliderDragStart', $event)"
+												(cpSliderDragEnd)="setPrimaryColor('cpSliderDragEnd', $event)"
+												(colorPickerChange)="colorChangePrimary($event)" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="d-block">
+											<label> Secondary Colour </label>
+											<input (change)="flagSetAsUpdatedForHospital()"
+												[(colorPicker)]="old_secondary_color"
+												[style.background]="old_secondary_color"
+												(cpInputChange)="setSecondaryColor('cpInputChange', $event)"
+												(cpSliderDragStart)="setSecondaryColor('cpSliderDragStart', $event)"
+												(cpSliderDragEnd)="setSecondaryColor('cpSliderDragEnd', $event)"
+												(colorPickerChange)="colorChangeSecondary($event)" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="d-block">
+											<label> Text Colour </label>
+											<input (change)="flagSetAsUpdatedForHospital()"
+												[(colorPicker)]="old_text_color" [style.background]="old_text_color"
+												(cpInputChange)="setTextColor('cpInputChange', $event)"
+												(cpSliderDragStart)="setTextColor('cpSliderDragStart', $event)"
+												(cpSliderDragEnd)="setTextColor('cpSliderDragEnd', $event)"
+												(colorPickerChange)="colorChangeText($event)" />
+										</div>
+									</div>
+
+
+									<div class="col-sm-12 pd-t20">
+										<div class="text-center">
+											<button type="submit" class="blue-btn hospital-update pd-l30 pd-r30"
+												(click)="editHospitalDetails(hospitaldetails)"
+												[disabled]="!hospitaldetails.valid">
+												Update
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</mat-tab>
+	</mat-tab-group>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">close</button>
+			</div>
+			<div class="modal-body pdf-modal">
+				<object class="pdf-object mr-20" type="application/pdf" [attr.data]="pdfSource"></object>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="myModalImage" role="dialog" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">close</button>
+			</div>
+			<div class="modal-body img-modal text-center">
+				<img class="img-object mr-20" [src]="pdfSourceImage">
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="imageCrop" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-backdrop="static"
+	data-keyboard="false" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog upload-modal modal-lg" role="document">
+		<div class="modal-content upload-content pd30">
+			<div class="modal-body pd0">
+				<div class="row">
+					<div class="col-sm-5">
+						<h3 class="modal-title"> Upload </h3>
+						<hr>
+						<div class="upload-box-wrap">
+							<div class="upload-box" [hidden]="imageCropData.image" (click)="fileUpload.click()">
+								<div class="img-block text-center">
+									<img src="/assets/images/cloud-storage.png" alt="">
+									<h4>Browse Your Files</h4>
+									<!-- accept="image/*" -->
+									<input class="edit" #fileUpload type='file' accept="image/jpeg, image/png" 
+										(change)="onSelectFile($event)" hidden>
+								</div>
+							</div>
+							<div class="cropper-wrap">
+								<image-cropper *ngIf="imageCropData.image" [imageChangedEvent]="imageChangedEvent"
+									[maintainAspectRatio]="false" [resizeToWidth]="0"
+									(imageCropped)="imageCropped($event)">
+								</image-cropper>
+							</div>
+							<h5 class="form-heading text-center mr-t30">Accepted file type : <span>.jpg and .png</span>
+							</h5>
+						</div>
+					</div>
+					<div class="offset-sm-1 col-sm-6">
+						<h3 class="modal-title"> Preview </h3>
+						<hr>
+						<span class="result rounded" *ngIf="imageCropData.image">
+							<img class="image-preview-update" [src]="imageCropData.image" />
+						</span>
+					</div>
+				</div>
+				<br>
+				<div class="col-sm-12 text-center mr-t30 mr-b20">
+					<button class="c-blue-btn" (click)="getImageData()" data-dismiss="modal"
+						aria-label="Close">Save</button>
+					<button class="c-blue-btn mr-l10 mr-r10" (click)="close('user')" data-dismiss="modal"
+						aria-label="Close">
+						Cancel </button>
+					<button class="c-blue-btn" *ngIf="imageCropData.image" (click)="fileUpload.click()"> Browse image
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="hospitalImageCrop" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-backdrop="static"
+	data-keyboard="false">
+	<div class="modal-dialog upload-modal modal-lg" role="document">
+
+		<div class="modal-content upload-content pd30">
+			<div class="modal-body pd0">
+				<div class="row">
+					<div class="col-sm-5">
+						<h3 class="modal-title"> Upload </h3>
+						<hr>
+						<div class="upload-box-wrap">
+							<div class="upload-box" [hidden]="hospitalCropData.logo_image"
+								(click)="fileUpload1.click()">
+								<div class="img-block text-center">
+									<img src="/assets/images/cloud-storage.png" alt="">
+									<h4>Browse Your Files Hospital Logo</h4>
+									<!-- accept="image/*" -->
+									<input class="edit" #fileUpload1 type='file'  accept="image/jpeg, image/png"
+										(change)="onSelectHospitalLogo($event)" hidden>
+								</div>
+							</div>
+							<div class="cropper-wrap">
+								<image-cropper *ngIf="hospitalCropData.logo_image"
+									[imageChangedEvent]="imageChangedEvent1" [maintainAspectRatio]="false"
+									[resizeToWidth]="0" (imageCropped)="imageCropped1($event)">
+								</image-cropper>
+							</div>
+							<h5 class="form-heading text-center mr-t30">Accepted file type : <span>.jpg and .png</span>
+							</h5>
+						</div>
+					</div>
+					<div class="offset-sm-1 col-sm-6">
+						<h3 class="modal-title"> Preview </h3>
+						<hr>
+						<span class="result rounded" *ngIf="hospitalCropData.logo_image">
+							<img class="image-preview-update-hospital-logo" [src]="hospitalCropData.logo_image" />
+						</span>
+					</div>
+				</div>
+				<br>
+				<div class="col-sm-12 text-center mr-t30 mr-b20">
+					<button class="c-blue-btn" (click)="getImageData()" data-dismiss="modal"
+						aria-label="Close">Crop</button>
+					<button class="c-blue-btn mr-l10 mr-r10" (click)="close('hospital')" data-dismiss="modal"
+						aria-label="Close">
+						Cancel </button>
+					<button class="c-blue-btn" *ngIf="hospitalCropData.logo_image" (click)="fileUpload1.click()"> Browse
+						image
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

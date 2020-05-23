@@ -1,0 +1,39 @@
+<mat-form-field class="d-block" appearance="outline">
+    <mat-select [formControl]="recordCtrl" multiple [placeholder]="dropdownLabelError.label" [disabled]="disabledFlag"    #multipleSelect (selectionChange)="Onchanged($event.value)" >
+      <mat-option>
+        <ngx-mat-select-search [formControl]="recordFilterCtrl" [noEntriesFoundLabel]="'No matching records found'" [placeholderLabel]="dropdownPlaceHolder"></ngx-mat-select-search>
+      </mat-option>
+  
+      <mat-option *ngFor="let record of filteredRecords | async" [value]="record[recordId]" [disabled]="record.disabled">
+        <!-- {{record[recordName]}} -->
+        <div class="d-flex align-items-center custom-dropdown-ui">
+        <!-- <div class="list-avtar-wrap">-->
+            <div class="custom-img"> 
+                <a [routerLink]="['/provider/ShowUserProfile',record.id]"
+                    target="_blank">
+                    <img  src="{{record.image || commonService.defaultImage}}"
+                        alt="" />
+                </a>
+            </div>
+        <!-- </div>-->
+       <!-- <div > -->
+        <h5 class="mr0 custom-h5" >
+                <a [routerLink]="['/provider/ShowUserProfile',record.id]"
+                    target="_blank">
+                     {{record.name}}
+                </a>
+            </h5> &nbsp;&nbsp;
+            <span class="custom-span">{{record.role_name}}</span>
+        <!-- </div> -->
+        <!-- <div> -->
+            <button *ngIf="record.status=='Invite'"
+                class="blue-status-btn status-btn" type="button"
+                (click)="sendInvitation(suggested.id)">{{record.status}}</button>
+            <button *ngIf="record.status!='Invite'"
+                class="blue-status-btn status-btn"
+                type="button">{{record.status}}</button>
+        <!-- </div>-->
+    </div> 
+      </mat-option>
+    </mat-select>
+  </mat-form-field>

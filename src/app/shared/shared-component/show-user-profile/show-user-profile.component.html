@@ -1,0 +1,292 @@
+<div class="row" *ngIf="userDetails">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="user-personal-details mr-b20 ">
+                    <div class="user-profile-card">
+                        <div class="profile-pic-wrap">
+                            <div class="porile-pic">
+                                <img class="imageSize" src="{{ userProfile?.image || this.commonService.defaultImage}}">
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <h4>Name : {{ userDetails.fullname }}</h4>
+                            <span class="type-name">User Type : {{userDetails.role_name}}</span>
+                            <div class="row">
+                                <h5 class="col-12 col-sm-6 col-md-6 col-lg-4">Date of Birth : <b>{{ userDetails.date_of_birth | date }}</b></h5>
+                                <h5 class="col-12 col-sm-6 col-md-6 col-lg-4">Mobile Number : <b *ngIf="userDetails.mobile_number && userDetails.mobile_number!='';else other_content">
+                                   <span class="flag-icon flag-icon-{{ ((userDetails?.mobile_country_details.iso2)?(userDetails?.mobile_country_details.iso2):(userDetails?.country_iso2) )| lowercase}}" > </span>
+                                    <span>{{(userDetails?.mobile_country_details.iso2)?(userDetails?.mobile_country_details.iso2):(userDetails?.country_iso2)}}  
+                                    <!-- {{userDetails?.mobile_country_details.phone_code}}   -->
+                                    {{ commonService.maskPhone(userDetails.mobile_number)}}</span> </b></h5>
+                                    <ng-template #other_content><b>NA</b></ng-template>
+                                <h5 class="col-12 col-sm-6 col-md-6 col-lg-4">landline Number : <b *ngIf="userDetails.landline && userDetails.landline!='';else landline_content">
+                                    <span class="flag-icon flag-icon-{{ userDetails?.country_iso2 | lowercase}}" > </span>
+                                    <span>{{userDetails?.country_iso2}} 
+                                    <!-- {{userDetails?.landline_phone_code}}   -->
+                                    {{ commonService.maskLandline(userDetails.landline)}}</span></b>
+                                    <ng-template #landline_content><b>NA</b></ng-template>
+                                </h5>
+                                <h5 class="col-12 col-sm-6 col-md-6 col-lg-4">Email : <b>{{ userDetails.email}}</b></h5>
+                                <h5 class="col-12 col-sm-12 col-md-12 col-lg-8">Full Address : <b>{{ userDetails.address}}</b></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="about-personal-details pd20 mr-b20">
+                    <h4 class="small-box-heading color-blue mr-b20">About Me </h4>
+                    <hr>
+                    <div class="about-info">
+                        <p>
+                            {{ userDetails.about_me }}
+                        </p>
+                   
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12" [hidden]=" userDetails.role_name !== 'Patient' || userDetails.role_name !=='Family Member'">
+                <div class="about-personal-details pd20">
+                    <div class="row" >
+                        <div class="col-sm-6">
+                            <div class="user-personal-details">
+                                <h5 class="small-box-heading color-blue mr-b20">Certificates</h5>
+                                <hr>
+                                <ul class="docs-list">
+                                    <li *ngFor="let certificates of certificatesList; let i=index">
+                                        {{certificates.certificate_name}}
+                                        <a data-toggle="modal" (click)="preview(i)" href="#myModal">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6"
+                            *ngIf="userDetails.role_name !== 'Patient' || userDetails.role_name !=='Family Member'">
+                            <div class="user-personal-details">
+                                <h5 class="small-box-heading color-blue mr-b20">Skills</h5>
+                                <hr>
+                                <ul class="docs-list">
+                                    <li *ngFor="let skill of skillsList; let i=index">
+                                        {{ skill.skill_name }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="white-box user-personal-details pd20">
+            <div class="card-deck">
+                <div class="card">
+                    <div class="user-p-box">
+                        <div class="image-name">
+                            <div class="b-profile mx-auto">
+                                <img class="imageSize" src="{{ userProfile?.image || this.commonService.defaultImage}}">
+                            </div>
+                           
+                            <div class="left-side-title text-center">
+                                <div class="row">
+                                    <h6 class="fullname-title col-sm-auto mr-t10 flaot-left">{{ userDetails.fullname }}
+                                    </h6>
+                                </div>
+                                <small *ngIf="userDetails.title"> ({{ userDetails.title }}) </small>
+                            </div>
+                            <div *ngIf="!userDetails.title" class="d-flex profession justify-content-center">
+                                <div class="profession-type"> {{ userDetails.role_name }} </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+        </div>
+        <div class="white-box user-personal-details mr-t20 pd20">
+            <h5 class="small-box-heading color-blue mr-b20">Profile Info</h5>
+            <hr>
+            <div class="row">
+                <p>
+                    <span class="float-left">Date of Birth:&nbsp;&nbsp;</span>
+                    <span class="float-right">{{ userDetails.date_of_birth | date }}</span>
+                </p>
+            </div>
+            <div class="row">
+               
+                <p>
+                    <span class="float-left">Email:&nbsp;&nbsp;</span>
+                    <span class="float-right">{{ userDetails.email }}</span>
+                </p>
+
+            </div>
+            <div class="row">
+                
+                <p>
+                    <span class="float-left">Mobile Number:&nbsp;&nbsp;</span>
+                    <span class="float-right">{{ userDetails.phone }}</span>
+                </p>
+            </div>
+        </div>
+        <div class="white-box user-personal-details mr-t20 pd20">
+            <h5 class="small-box-heading color-blue mr-b20">About Me</h5>
+            <hr>
+            <p> {{ userDetails.about_me }} </p>
+        </div> -->
+        <!-- [hidden]=" userDetails.role_name !== 'Patient' || userDetails.role_name !=='Family Member'" -->
+        <!-- <div class="row" >
+            <div class="col-sm-6">
+                <div class="white-box user-personal-details mr-t20 pd20">
+                    <h5 class="small-box-heading color-blue mr-b20">Certificates</h5>
+                    <hr>
+                    <ul class="docs-list">
+                        <li *ngFor="let certificates of certificatesList; let i=index">
+                            {{certificates.certificate_name}}
+                            <a data-toggle="modal" (click)="preview(i)" href="#myModal">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6"
+                *ngIf="userDetails.role_name !== 'Patient' || userDetails.role_name !=='Family Member'">
+                <div class="white-box user-personal-details mr-t20 pd20">
+                    <h5 class="small-box-heading color-blue mr-b20">Skills</h5>
+                    <hr>
+                    <ul class="docs-list">
+                        <li *ngFor="let skill of skillsList; let i=index">
+                            {{ skill.skill_name }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!-- <div class="row" *ngIf="userDetails">
+    <div class="col-sm-12">
+        <div class="row mr-b20">
+
+          
+
+            <div class="col-sm-4 first-box">
+                <div class="image-name">
+                    <div class="b-profile mx-auto mr20">
+                        <img class="imageSize" src="{{ userProfile?.image || this.commonService.defaultImage}}">
+                    </div>
+
+                    <div class="left-side-title col-sm-auto text-center pd-t30">
+                        <h6 class="fullname-title pd-b20">{{ userDetails.fullname }}</h6>
+                        <div class="row profession justify-content-center">
+                            <div class="col-sm-auto profession-type"> {{ userDetails.role_name }} </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+         
+
+            <div class="col-sm-8">
+                <div class="col-sm-4 mr-t30 pd-t20">
+                    <h5 class="right-title">About Me</h5>
+                </div>
+                <div class="col-sm-auto">
+                    <p>
+                        {{ userDetails.about_me }}
+                    </p>
+                    <hr>
+                    <div class="row basic-info">
+                        <div class="col-sm-4 pd-b10 text-center">
+                            <h6 class="sub-title pd10">Date of Birth</h6>
+                            {{ userDetails.date_of_birth | date }}
+                        </div>
+                        <div class="sub-title col-sm-4 pd-b10 text-center">
+                            <h6 class="pd10">Email</h6>
+                            {{ userDetails.email }}
+                        </div>
+                        <div class="sub-title col-sm-4 pd-b10 text-center">
+                            <h6 class="pd10">Phone</h6>
+                            {{ userDetails.phone }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 mr-t30 pd-t20">
+                    <h5 class="right-title">
+                        Certificates
+                    </h5>
+                </div>
+                <hr>
+
+                <div class="basic-info">
+                    <div class="pd-b10" *ngFor="let certificates of certificatesList; let i=index">
+                        <h6 class="pd10">{{certificates.certificate_name}}
+                            <a class="float-right" data-toggle="modal" href="#myModalImage">
+                                Preview
+                            </a>
+                        </h6>
+                    </div>
+                </div>
+                <div class="col-sm-4 mr-t30 pd-t20">
+                    <h5 class="right-title">
+                        Skills
+                    </h5>
+                </div>
+                <hr>
+                <div class="basic-info">
+                    <div class="pd-b10">
+                        <h6 class="pd10">Skill 1</h6>
+                    </div>
+                    <div class="pd-b10">
+                        <h6 class="pd10">Skill 2</h6>
+                    </div>
+                    <div class="pd-b10">
+                        <h6 class="pd10">Skill 3</h6>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<!-- <div class="modal fade" id="myModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="col-sm-12 pd10">
+                <img data-dismiss="modal" class="float-right" aria-label="Close"
+                    src="../../../../assets//images/close-icon.png">
+            </div>
+            <div class="modal-body pdf-modal">
+                <img class="img-object mr-20" [src]="pdfSourceImage">
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- 
+<div class="modal fade" id="myModalImage" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="col-sm-12 pd10">
+                <img data-dismiss="modal" class="float-right" aria-label="Close"
+                    src="../../../../assets//images/close-icon.png">
+            </div>
+            <div class="modal-body pdf-modal">
+                <object class="pdf-object mr-20" type="application/pdf" [attr.data]="pdfSource"></object>
+            </div>
+        </div>
+    </div>
+</div> -->

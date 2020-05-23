@@ -1,0 +1,60 @@
+  <mat-form-field class="d-block" appearance="outline">
+    <mat-label>{{dropdownLabelError.label}}</mat-label>
+    <!-- <mat-select *ngIf="multipleFlag" [formControl]="recordCtrl" multiple #multiSelect [disabled]="disabledFlag || records.length==0" [required]="requiredFlag"  [(ngModel)]="value"  (selectionChange)="onChange($event.value)" (selectionChange)="Onchanged($event.value,$event)" (blur)="onTouched()">
+      <mat-option>
+        <ngx-mat-select-search [preventHomeEndKeyPropagation]="true" [formControl]="recordFilterCtrl" [noEntriesFoundLabel]="'No matching records found'" [placeholderLabel]="dropdownPlaceHolder"></ngx-mat-select-search>
+        <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+      </mat-option>
+  
+      <mat-option *ngFor="let record of filteredRecords | async" [value]="record[recordId]">
+        {{record[recordName]}}
+      </mat-option>
+    </mat-select>
+    <mat-select *ngIf="!multipleFlag" [formControl]="recordCtrl" #multiSelect [disabled]="disabledFlag || records.length==0" [required]="requiredFlag"  [(ngModel)]="value[0]"  (selectionChange)="onChange($event.value)" (selectionChange)="Onchanged($event.value,$event)" (blur)="onTouched()">
+      <mat-option>
+        <ngx-mat-select-search [preventHomeEndKeyPropagation]="true" [formControl]="recordFilterCtrl" [noEntriesFoundLabel]="'No matching records found'" [placeholderLabel]="dropdownPlaceHolder"></ngx-mat-select-search>
+        <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+      </mat-option>
+  
+      <mat-option *ngFor="let record of filteredRecords | async" [value]="record[recordId]">
+        {{record[recordName]}}
+      </mat-option>
+    </mat-select> -->
+      
+
+    <mat-select *ngIf="multipleFlag" [formControl]="recordCtrl" 
+    multiple #multiSelect [disabled]="disabledFlag || records.length==0"
+     [required]="requiredFlag"  [(ngModel)]="value"  
+     (selectionChange)="onChange($event.value)" (blur)="onTouched()"
+    >
+    <mat-option>
+      <ngx-mat-select-search [preventHomeEndKeyPropagation]="true" [formControl]="recordFilterCtrl" [noEntriesFoundLabel]="'No matching records found'" [placeholderLabel]="dropdownPlaceHolder"></ngx-mat-select-search>
+      <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+    </mat-option>
+    <mat-option *ngFor="let record of filteredRecords | async"
+    [disabled]="chkForDisabled(record[recordId])"
+     [value]="record[recordId]"
+     (onSelectionChange)="Onchanged($event,record[recordId])">
+      {{record[recordName]}}
+    </mat-option>
+</mat-select>
+    <mat-select *ngIf="!multipleFlag" [formControl]="recordCtrl" 
+     [disabled]="disabledFlag || records.length==0"
+     [required]="requiredFlag"  [(ngModel)]="value[0]"  
+     (selectionChange)="onChange($event.value)" (blur)="onTouched()"
+    >
+    <mat-option>
+      <ngx-mat-select-search [preventHomeEndKeyPropagation]="true" [formControl]="recordFilterCtrl" [noEntriesFoundLabel]="'No matching records found'" [placeholderLabel]="dropdownPlaceHolder"></ngx-mat-select-search>
+      <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+    </mat-option>
+    <mat-option *ngFor="let record of filteredRecords | async"
+    [disabled]="chkForDisabled(record[recordId])"
+     [value]="record[recordId]"
+     (onSelectionChange)="Onchanged($event,record[recordId])">
+      {{record[recordName]}}
+    </mat-option>
+</mat-select>
+<mat-hint class="color-blue" *ngIf="records.length==0">{{dropdownLabelError.NoDatalabel}}</mat-hint>
+    <mat-error *ngIf="(recordCtrl.touched || recordCtrl.dirty) && recordCtrl.errors">
+      {{dropdownLabelError.requiredError}}</mat-error>
+  </mat-form-field>

@@ -1,0 +1,24 @@
+<mat-dialog-content>
+  {{message}}
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+<button mat-raised-button color="primary"  mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+<!-- (click)="continue()" -->
+</mat-dialog-actions>
+
+<div class="modal-header">
+  <h5 class="modal-title">
+    <i class="fa fa-key key-icon"></i> Alert</h5>
+    <div title="close" class="close-btn" data-dismiss="modal" ></div>
+    <!-- (click)="activeModal.close()" -->
+</div>
+<div class="modal-body" >
+  <h1 *ngIf="countdown"> 
+    <!--You will be timed out in  {{(countMinutes !== 0 ? + countMinutes+' Minute'+(countMinutes > 1 ? 's ' : ' ') : '') + countSeconds+' Seconds'}} Do you need more time?-->
+    your session going to expire. Do you need more time?
+    <button type="button"  class="text-uppercase primary-button-doxiva" >
+        <!-- (click)="continue()" -->
+        OK</button>
+  </h1>
+  
+</div>

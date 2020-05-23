@@ -1,0 +1,14 @@
+<mat-dialog-content >
+        <p><strong>{{message}}</strong></p>
+        <mat-form-field class="formfield-full-width">
+                <input matInput placeholder="What action you have taken?" appAvoidSpace #action_feedback autocomplete="off" [(ngModel)]="feedback" 
+                  required>
+                
+              </mat-form-field>
+      </mat-dialog-content>
+      <br>
+      <mat-dialog-actions align="end">
+      <!-- <button mat-raised-button color="primary" mat-dialog-close tabindex="-1">{{cancelButtonText}}</button> -->
+      <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
+      <!-- <button mat-raised-button class="btn btn-success" style="color: white" mat-dialog-close>{{cancelButtonText}}</button> -->
+      </mat-dialog-actions>

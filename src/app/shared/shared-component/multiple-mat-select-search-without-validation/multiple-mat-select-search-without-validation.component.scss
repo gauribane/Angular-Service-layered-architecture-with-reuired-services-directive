@@ -1,0 +1,54 @@
+.avtar-img {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  .avtar-img img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+  }
+  .custom-dropdown-ui{
+    //  padding: 0px 0 10px;
+    // margin-bottom: 10px;
+    border-bottom: 1px solid lightgray;
+  }
+
+  .a-l-info {
+    flex: 1;
+  }
+  .a-l-info  a h5 {
+    color: #545454;
+    font-family: SFPROTEXT-REGULAR;
+    font-size: 15px;
+  }
+  .a-l-info span {
+    color: #545454;
+    font-family: SFPROTEXT-LIGHT;
+    font-size: 13px;
+  }
+  .custom-img{
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  .custom-img img{
+    height: 23px;
+    width: 25px;
+    overflow: hidden;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .custom-h5 a{
+        color: #545454;
+        font-family: SFPROTEXT-REGULAR;
+        font-size: 15px;
+        // margin-left:10px;
+      }
+  
+      .custom-span{
+        color: #545454;
+        font-family: SFPROTEXT-LIGHT;
+        font-size: 13px;
+      }

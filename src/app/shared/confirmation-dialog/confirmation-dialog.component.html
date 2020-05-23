@@ -1,0 +1,27 @@
+<!-- 
+<mat-dialog-content>
+  <strong>{{data.data}}</strong>
+</mat-dialog-content>
+<br>
+<mat-dialog-actions>
+    <button mat-button class="btn btn-success" style="color: white" [mat-dialog-close]="true">OK</button>
+  <button mat-button class="btn btn-success" style="color: white" mat-dialog-close>Cancel</button>
+
+</mat-dialog-actions> -->
+
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{heading}}</h4>
+  <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="decline()">
+      <span aria-hidden="true">&times;</span>
+  </button> -->
+  <button id="close_con" type="button" class="close" (click)="decline()"> <img src="/assets/images/icons/close.png" alt="" title="" /></button>
+
+</div>
+<div class="modal-body">
+  <span [innerHtml]="message"></span>
+</div>
+<div class="modal-footer">
+      <button type="button" style="background: #57b7e9;"class="btn btn-default" (click)="confirm()">OK</button>
+      <!-- <button type="button" style="background: #57b7e9;"class="btn btn-default" (click)="decline()">Cancel</button> -->
+
+</div>

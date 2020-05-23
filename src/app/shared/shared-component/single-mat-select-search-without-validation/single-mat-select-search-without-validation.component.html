@@ -1,0 +1,11 @@
+<mat-form-field class="d-block" appearance="outline">
+  <mat-select [formControl]="recordCtrl"  [placeholder]="dropdownLabelError.label" [disabled]="disabledFlag" [required]="requiredFlag"  [(ngModel)]="value"  #singleSelect  (selectionChange)="Onchanged($event.value)" >
+    <mat-option>
+      <ngx-mat-select-search [formControl]="recordFilterCtrl" [noEntriesFoundLabel]="'No matching records found'" [placeholderLabel]="dropdownPlaceHolder"></ngx-mat-select-search>
+    </mat-option>
+
+    <mat-option *ngFor="let record of filteredRecords | async" [value]="record[recordId]" [disabled]="record.disabled">
+      {{record[recordName]}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

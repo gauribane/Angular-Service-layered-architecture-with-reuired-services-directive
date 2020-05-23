@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="all-n-wrap">
+            <h3 class="small-box-heading color-blue">Notifications</h3>
+            <!-- <div class="n-search-input">
+                <input type="text" class="form-control" placeholder="Search" (keyup)="onSearch($event.target.value)">
+                <button>
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div> -->
+        </div>
+        <hr>
+    </div>
+    <div class="col-sm-12">
+        <div class="white-accordian">
+            <mat-accordion>
+                <mat-expansion-panel [expanded]="step === i" (opened)="setStep(i)"
+                    *ngFor="let notificationValue of notificationlist?.notifications  | notificationAgo ;let i=index;"
+                    hideToggle>
+                    <mat-expansion-panel-header (click)="takeAction(notificationValue)">
+                        <mat-panel-title>
+                            <div class="tab-profile">
+                                <div class="pro-img-block">
+                                    <!-- '/hospitaladmin/ShowUserProfile' -->
+                                    <a target="_blank" title="View Profile"
+                                        [routerLink]="[ this.navigateUrl,notificationValue.source_info.id]"
+                                        target="_blank" class="info-link mr-r10">
+                                        <img src="{{notificationValue.source_info.profile_image || this.commonService.defaultImage}}"
+                                            alt="" />
+                                    </a>
+                                </div>
+                                <div class="profile-details-block">
+                                    <h5>
+                                        <a target="_blank" title="View Profile"
+                                            [routerLink]="[  this.navigateUrl,notificationValue.source_info.id]"
+                                            target="_blank"
+                                            class="info-link mr-r10">{{notificationValue.source_info.name}} </a>
+                                    </h5>
+                                    <p>{{notificationValue.source_info.role_name}}</p>
+                                </div>
+                            </div>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            <div class="tab-option">
+                                <button *ngIf="!particularUser" class="custom_UI_btn" title="View Notification"
+                                    (click)="takeAction(notificationValue)">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </button>
+                                <small class="seen-status float-right"
+                                    [ngClass]="{'s-msg-seen':notificationValue.data[0].is_seen,'s-msg-unseen':!notificationValue.data[0].is_seen}">
+                                    <img alt="" src="/assets/images/double-tick-indicator.svg"
+                                        title="Seen Notification">
+                                </small>
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <ul>
+                        <li class="pointer notification_l" *ngFor="let event of notificationValue.data">
+                            <p>
+                                {{event.event}}
+                                <small class="float-right">
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    {{event.agoTime}}
+                                </small>
+                            </p>
+
+                        </li>
+                    </ul>
+
+                    <mat-action-row>
+                        <button *ngIf="i!=0" mat-button color="warn" (click)="prevStep()">Previous</button>
+                        <button *ngIf="!particularUser" mat-button color="primary"
+                            (click)="nextStep()">{{i!=notificationlist?.notifications.length-1?"Next":"End"}}</button>
+                    </mat-action-row>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

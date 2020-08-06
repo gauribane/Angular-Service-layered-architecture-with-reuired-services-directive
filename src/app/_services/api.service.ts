@@ -53,7 +53,7 @@ export class ApiService {
     var Token;
     let headers,encryptedApi,encryptedData;
     if (headerFlag) {
-      var tokenData = localStorage.getItem('accessTokenOfKardio')
+      var tokenData = localStorage.getItem('accessToken')
       if (tokenData) {
         Token = JSON.parse(tokenData);//res
         headers = { auth: Token };
@@ -75,7 +75,7 @@ export class ApiService {
         else if (decryptedData.result) {
           var accessToken = decryptedData.result.token;
           if (accessToken) {
-            localStorage.setItem('accessTokenOfKardio', JSON.stringify(accessToken));
+            localStorage.setItem('accessToken', JSON.stringify(accessToken));
           }
           return decryptedData;
         }

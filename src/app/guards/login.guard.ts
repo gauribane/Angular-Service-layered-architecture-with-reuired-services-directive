@@ -25,20 +25,19 @@ export class LoginGuard implements CanActivate  {
     canActivate(route: ActivatedRouteSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
             return this.isUserLoggedIn()
           .then(result=>{
-            //debugger;
-            //console.log("result",result)
+            debugger;
             switch(this.commonService.loggedInUser.role_type){
               case 'Super Admin' :
                   this.router.navigate(['/superadmin/dashboard']);
                   break;
-              case 'Hospital Admin' :
-                      this.router.navigate(['/hospitaladmin/dashboard']);
+              case 'Admin' :
+                      this.router.navigate(['/admin/dashboard']);
                       break;
-              case 'Provider' :
-                  this.router.navigate(['/provider/provider-dashboard']);
+              case 'User' :
+                  this.router.navigate(['/user/user-dashboard']);
                   break;
-              case 'eConsultant' :
-                    this.router.navigate(['/e-consult/dashboard']);
+              case 'Supplier' :
+                    this.router.navigate(['/supplier/dashboard']);
                     break;    
               default: return true;            
             }
@@ -54,12 +53,10 @@ export class LoginGuard implements CanActivate  {
  */
     isUserLoggedIn():Promise<boolean>{
           return new Promise ((resolve,reject) =>{
-            //debugger;
-            //console.log("!localStorage.getItem('accessTokenOfKardio')",localStorage.getItem('accessTokenOfKardio'))
-              if(localStorage.getItem('accessTokenOfKardio')){
+              if(!localStorage.getItem('accessToken')){
+                return reject(true);
+              }
                 resolve(true);	
-              }else
-                reject(true);
           });
     }
       

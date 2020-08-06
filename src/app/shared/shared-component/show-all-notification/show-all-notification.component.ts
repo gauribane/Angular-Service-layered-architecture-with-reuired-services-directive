@@ -19,7 +19,7 @@ export class ShowAllNotificationComponent implements OnInit {
     id: "",
     pageNumber: null,
     pageSize: null,
-    hospital_id:""
+    org_id:""
   }
   particularUser: boolean;
   notificationlist: any;
@@ -54,8 +54,8 @@ export class ShowAllNotificationComponent implements OnInit {
       case 'Provider':
         this.navigateUrl='/provider/ShowUserProfile';
         break
-      case 'Hospital Admin':
-        this.navigateUrl='/hospitaladmin/ShowUserProfile';
+      case 'org Admin':
+        this.navigateUrl='/orgadmin/ShowUserProfile';
         break   
       case 'Super Admin' :
         this.navigateUrl='/superadmin/ShowUserProfile';
@@ -70,7 +70,7 @@ export class ShowAllNotificationComponent implements OnInit {
   getUserNotifications() {
     this.notification.id = this.commonService.loggedInUser.id;
     this.notification.callFrom = "web";
-    this.notification.hospital_id=this.commonService.loggedInUser.role_name=='Cardiologist'?this.commonService.loggedInUser.selected_hospital_id:null
+    this.notification.org_id=this.commonService.loggedInUser.role_name=='Cardiologist'?this.commonService.loggedInUser.selected_org_id:null
     this.commonService.apiCall(this.apiListService.getUserNotifications, this.notification)
       .then((res: any) => {
         if (res.status.code == '00')

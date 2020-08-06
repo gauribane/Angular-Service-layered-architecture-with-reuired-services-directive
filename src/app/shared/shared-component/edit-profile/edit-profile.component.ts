@@ -49,7 +49,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ["./edit-profile.component.scss"]
 })
 export class EditProfileComponent implements OnInit {
-  hospitalDataFlag: boolean = false;
+  orgDataFlag: boolean = false;
   logoUpdatedFlag;
   emailAvailable;
   passwordValue;
@@ -65,7 +65,7 @@ export class EditProfileComponent implements OnInit {
   userProfile: any = {};
   userProfileData: any = {};
 
-  hospital_logo: any = {};
+  org_logo: any = {};
   filesData: any = {};
   uploadFile = [];
   userPassword: any = {};
@@ -78,7 +78,7 @@ export class EditProfileComponent implements OnInit {
   editprofile: FormGroup;
   // newEditProfile:FormGroup;
   passwordUpdateData: FormGroup;
-  hospitaldetails: FormGroup;
+  orgdetails: FormGroup;
   firstname;
   country_code;
   landline;
@@ -101,16 +101,16 @@ export class EditProfileComponent implements OnInit {
   certificates;
   _name;
   Faxnumber;
-  hospital_country;
-  hospital_state;
-  hospital_city;
-  hospital_landline;
-  hospital_address_line1;
-  hospital_address_line2;
+  org_country;
+  org_state;
+  org_city;
+  org_landline;
+  org_address_line1;
+  org_address_line2;
 
   button_color;
   themeColor;
-  hospital_address;
+  org_address;
 
   city;
   state;
@@ -121,9 +121,9 @@ export class EditProfileComponent implements OnInit {
   address_line1;
   address_line2;
   stateList = [];
-  stateListForHospital=[]
+  stateListFororg=[]
   cityList = [];
-  cityListForHospital=[]
+  cityListFororg=[]
   old_primary_color: string = "";
   old_secondary_color: string = "";
   old_text_color: string = "";
@@ -158,12 +158,12 @@ export class EditProfileComponent implements OnInit {
   cityGroupOptions: Observable<any[]>;
 
   @ViewChild("passwordForm", { static: false }) passwordForm: NgForm;
-  @ViewChild("hospitalRegistration", { static: false })
-  hospitalRegistration: NgForm;
+  @ViewChild("orgRegistration", { static: false })
+  orgRegistration: NgForm;
 
   primaryColorPicker = document.getElementById("color-picker-primary");
   imageCropData: any;
-  hospitalCropData: any;
+  orgCropData: any;
   visibilityIconForNew:any="visibility_off";
   visibilityIconForConfirm:any="visibility_off";
   visibilityIconForOld:any="visibility_off";
@@ -193,7 +193,7 @@ export class EditProfileComponent implements OnInit {
     this.uploadFile = [];
     this.userData = this.commonService.loggedInUser;
     this.imageCropData = {};
-    this.hospitalCropData = {};
+    this.orgCropData = {};
   }
 
   /**
@@ -214,7 +214,7 @@ export class EditProfileComponent implements OnInit {
     this.maxdate();
     this.editProfileDataGroup();
     this.updatePasswordGroup();
-    this.hospitalDataGroup();
+    this.orgDataGroup();
   }
 
   scrollWin() {
@@ -298,19 +298,19 @@ export class EditProfileComponent implements OnInit {
     this.certificates = new FormControl(null, []);
     this._name = new FormControl("", [Validators.required]);
     this.Faxnumber=new FormControl("", [Validators.required]);
-    this.hospital_country = new FormControl("", [Validators.required]);
-    this.hospital_address = new FormControl("", [Validators.required]);
+    this.org_country = new FormControl("", [Validators.required]);
+    this.org_address = new FormControl("", [Validators.required]);
     this.address_line1 = new FormControl("", [Validators.required]);
     this.address_line2 = new FormControl("");
     this.country = new FormControl("", [Validators.required]);
     this.state = new FormControl("");
     this.city = new FormControl("");
 
-    this.hospital_state = new FormControl("");
-    this.hospital_city = new FormControl("");
-    this.hospital_landline=new FormControl("");
-    this.hospital_address_line1 = new FormControl("", [Validators.required]);
-    this.hospital_address_line2 = new FormControl("");
+    this.org_state = new FormControl("");
+    this.org_city = new FormControl("");
+    this.org_landline=new FormControl("");
+    this.org_address_line1 = new FormControl("", [Validators.required]);
+    this.org_address_line2 = new FormControl("");
     this.landline=new FormControl("");
     this.country_code=new FormControl("", [Validators.required]);
   }
@@ -337,9 +337,9 @@ export class EditProfileComponent implements OnInit {
     this.userProfile.image = this.commonService.defaultImage;
     this.userProfile.isUpdated = false;
 
-    this.hospital_logo.isUpdated = false;
-    this.hospital_logo.logo_name = "";
-    this.hospital_logo.logo_image = this.commonService.defaultLogoImage;
+    this.org_logo.isUpdated = false;
+    this.org_logo.logo_name = "";
+    this.org_logo.logo_image = this.commonService.defaultLogoImage;
 
     this.filesData.isUpdated = false;
     this.filesData.certificates = [];
@@ -383,17 +383,17 @@ export class EditProfileComponent implements OnInit {
         this.userProfile.image = this.userOldData.image;
         this.userProfile.isUpdated=false;
         if(this.commonService.loggedInUser.role_name =='eClinic Admin'){
-          this.hospital_logo.logo_image = this.userOldData.clinic_image.file;
+          this.org_logo.logo_image = this.userOldData.clinic_image.file;
           this.userOldData.clinic_country_id=this.userOldData.clinic_country_id?this.userOldData.clinic_country_id:this.localDataService.defaultCountry;
         this.getAllState(this.userOldData.clinic_country_id,null,null,null);
         this.getAllCity(this.userOldData.clinic_state_id,null,null,null);
       }
         else{
-          this.hospital_logo.logo_image = this.userOldData.hospital_image.file;
-          this.hospital_logo.isUpdated=false;
-          this.userOldData.hospital_country_id=this.userOldData.hospital_country_id?this.userOldData.hospital_country_id:this.localDataService.defaultCountry;
-        this.getAllState(this.userOldData.hospital_country_id,null,null,null);
-        this.getAllCity(this.userOldData.hospital_state_id,null,null,null);
+          this.org_logo.logo_image = this.userOldData.org_image.file;
+          this.org_logo.isUpdated=false;
+          this.userOldData.org_country_id=this.userOldData.org_country_id?this.userOldData.org_country_id:this.localDataService.defaultCountry;
+        this.getAllState(this.userOldData.org_country_id,null,null,null);
+        this.getAllCity(this.userOldData.org_state_id,null,null,null);
     }
         this.setOldPasswordData();
       })
@@ -410,8 +410,8 @@ export class EditProfileComponent implements OnInit {
   //   this.getAllState(this.userOldData.country_id);
   //       this.getAllCity(this.userOldData.state_id);
   //   }else{
-  //     this.getAllState(this.userOldData.hospital_country_id);
-  //       this.getAllCity(this.userOldData.hospital_state_id);
+  //     this.getAllState(this.userOldData.org_country_id);
+  //       this.getAllCity(this.userOldData.org_state_id);
   //   }
   // }
 
@@ -480,20 +480,20 @@ export class EditProfileComponent implements OnInit {
   }
 
   /**
-   * @Function hospitalDataGroup
+   * @Function orgDataGroup
    *
    */
-  hospitalDataGroup() {
-    this.hospitaldetails = new FormGroup({
+  orgDataGroup() {
+    this.orgdetails = new FormGroup({
       name: this._name,
       emai:this.email,
       Faxnumber:this.Faxnumber,
-      hospital_country: this.hospital_country,
-      hospital_address_line1: this.hospital_address_line1,
-      hospital_address_line2: this.hospital_address_line2,
-      hospital_state: this.hospital_state,
-      hospital_city: this.hospital_city,
-      hospital_landline:this.hospital_landline
+      org_country: this.org_country,
+      org_address_line1: this.org_address_line1,
+      org_address_line2: this.org_address_line2,
+      org_state: this.org_state,
+      org_city: this.org_city,
+      org_landline:this.org_landline
     });
   }
 
@@ -640,15 +640,15 @@ export class EditProfileComponent implements OnInit {
 
   /**
    *
-   * @Function editHospitalDetails
-   * @param hospitalDetails
+   * @Function editorgDetails
+   * @param orgDetails
    *
    * #3467a7
    * #5b7ca5
    *
    *
    */
-  editHospitalDetails(formData) {
+  editorgDetails(formData) {
     this.userData["fullname"] = this.userData.fullname;
     this.userData["image"] = this.userProfile.image;
     this.submitted = true;
@@ -669,32 +669,32 @@ export class EditProfileComponent implements OnInit {
       ? (formData.value["text_color"] = this.old_text_color)
       : (formData.value["text_color"] = this.updated_text_color);
 
-  if(this.commonService.loggedInUser.role_name =='Hospital Admin'){
-      formData.value['hospital_address_line1']= this.hospitaldetails.controls.hospital_address_line1.value,
-      formData.value['hospital_address_line2']= this.hospitaldetails.controls.hospital_address_line2.value,
-      formData.value['hospital_city_id']= this.hospitaldetails.controls.hospital_city.value,
-      formData.value['hospital_state_id']= this.hospitaldetails.controls.hospital_state.value,
-      formData.value['hospital_country_id']= this.hospitaldetails.controls.hospital_country.value,
-      formData.value['hospital_zip_code']= this.userOldData.hospital_zip_code
+  if(this.commonService.loggedInUser.role_name =='org Admin'){
+      formData.value['org_address_line1']= this.orgdetails.controls.org_address_line1.value,
+      formData.value['org_address_line2']= this.orgdetails.controls.org_address_line2.value,
+      formData.value['org_city_id']= this.orgdetails.controls.org_city.value,
+      formData.value['org_state_id']= this.orgdetails.controls.org_state.value,
+      formData.value['org_country_id']= this.orgdetails.controls.org_country.value,
+      formData.value['org_zip_code']= this.userOldData.org_zip_code
     // };
     formData.value["id"] = this.commonService.loggedInUser.id;
-    formData.value["hospital_id"] = this.userOldData.id;
-   formData.value["hospital_name"]=this.userOldData.name;
-   formData.value["hospital_landline"] = this.userOldData.hospital_landline;
+    formData.value["org_id"] = this.userOldData.id;
+   formData.value["org_name"]=this.userOldData.name;
+   formData.value["org_landline"] = this.userOldData.org_landline;
     formData.value["fax_number"] = this.userOldData.fax_number;
-    formData.value["hospital_image"]={
-      file:this.hospital_logo.logo_image,
-      file_name:this.hospital_logo.logo_name,
-      is_updated:this.hospital_logo.isUpdated,
-      file_type:this.hospital_logo.file_type
+    formData.value["org_image"]={
+      file:this.org_logo.logo_image,
+      file_name:this.org_logo.logo_name,
+      is_updated:this.org_logo.isUpdated,
+      file_type:this.org_logo.file_type
     }
-    this.hospitalUpdateData(formData.value);
+    this.orgUpdateData(formData.value);
   }else{
-    formData.value['clinic_address_line1']= this.hospitaldetails.controls.hospital_address_line1.value,
-    formData.value['clinic_address_line2']= this.hospitaldetails.controls.hospital_address_line2.value,
-    formData.value['clinic_city_id']= this.hospitaldetails.controls.hospital_city.value,
-    formData.value['clinic_state_id']= this.hospitaldetails.controls.hospital_state.value,
-    formData.value['clinic_country_id']= this.hospitaldetails.controls.hospital_country.value,
+    formData.value['clinic_address_line1']= this.orgdetails.controls.org_address_line1.value,
+    formData.value['clinic_address_line2']= this.orgdetails.controls.org_address_line2.value,
+    formData.value['clinic_city_id']= this.orgdetails.controls.org_city.value,
+    formData.value['clinic_state_id']= this.orgdetails.controls.org_state.value,
+    formData.value['clinic_country_id']= this.orgdetails.controls.org_country.value,
     formData.value['clinic_zip_code']= this.userOldData.clinic_zip_code;
   // };
   formData.value["id"] = this.commonService.loggedInUser.id;
@@ -703,16 +703,16 @@ export class EditProfileComponent implements OnInit {
   formData.value["clinic_landline"] = this.userOldData.clinic_landline;
   formData.value["clinic_fax_number"] = this.userOldData.fax_number;
   formData.value["clinic_image"]={
-    file:this.hospital_logo.logo_image,
-    file_name:this.hospital_logo.logo_name,
-    is_updated:this.hospital_logo.isUpdated,
-    file_type:this.hospital_logo.file_type
+    file:this.org_logo.logo_image,
+    file_name:this.org_logo.logo_name,
+    is_updated:this.org_logo.isUpdated,
+    file_type:this.org_logo.file_type
   }
   this.eClinicUpdateData(formData.value);
   }
   }
 
-  hospitalUpdateData(formData) {
+  orgUpdateData(formData) {
     if (this.editprofile.valid) {
       this.editOnSubmit(this.editprofile);
     }
@@ -722,7 +722,7 @@ export class EditProfileComponent implements OnInit {
     //console.log("formData",formData)
 
     this.commonService
-      .apiCall(this.apiListService.updateHospital, formData)
+      .apiCall(this.apiListService.updateorg, formData)
       .then((res: any) => {
         this.snackbarService.showSuccess(res.status.message);
         this.updateLocalStorageImageNameLogo();
@@ -963,23 +963,23 @@ export class EditProfileComponent implements OnInit {
    * @param event
    *
    */
-  async onSelectHospitalLogo(event) {
+  async onSelectorgLogo(event) {
     this.imageChangedEvent1 = event;
     try {
-      var hospitalLogoDeatils: any = await this.commonService.onSelectFile(
+      var orgLogoDeatils: any = await this.commonService.onSelectFile(
         event
       );
-      this.hospital_logo.logo_name = hospitalLogoDeatils.image_name;
-      this.hospitalCropData.logo_image = hospitalLogoDeatils.image;
-      this.hospital_logo.isUpdated = true;
-      this.hospital_logo.file_type=hospitalLogoDeatils.file_type;
+      this.org_logo.logo_name = orgLogoDeatils.image_name;
+      this.orgCropData.logo_image = orgLogoDeatils.image;
+      this.org_logo.isUpdated = true;
+      this.org_logo.file_type=orgLogoDeatils.file_type;
     } catch (e) {
       return;
     }
   }
 
   imageCropped1(image) {
-    this.hospitalCropData.logo_image = image.base64;
+    this.orgCropData.logo_image = image.base64;
   }
 
   /**
@@ -987,9 +987,9 @@ export class EditProfileComponent implements OnInit {
    *
    */
   getImageData() {
-    if (this.hospitalCropData.logo_image || this.imageCropData.image) {
-      if (this.hospital_logo.isUpdated == true) {
-        this.hospital_logo.logo_image = this.hospitalCropData.logo_image;
+    if (this.orgCropData.logo_image || this.imageCropData.image) {
+      if (this.org_logo.isUpdated == true) {
+        this.org_logo.logo_image = this.orgCropData.logo_image;
       }
       if (this.userProfile.isUpdated == true) {
         this.userProfile.image = this.imageCropData.image;
@@ -1008,8 +1008,8 @@ export class EditProfileComponent implements OnInit {
       this.userProfile.image = this.commonService.loggedInUser.image;
       this.userProfile.image_name = this.commonService.loggedInUser.image_name;
       this.userProfile.isUpdated = false;
-    } else if ((type = "hospital")) {
-      this.hospitalCropData.logo_image = "";
+    } else if ((type = "org")) {
+      this.orgCropData.logo_image = "";
     }
   }
 
@@ -1143,8 +1143,8 @@ export class EditProfileComponent implements OnInit {
   flagSetAsUpdated() {
     this.updatedBasicInfo = true;
   }
-  flagSetAsUpdatedForHospital() {
-    this.hospitalDataFlag = true;
+  flagSetAsUpdatedFororg() {
+    this.orgDataFlag = true;
   }
 
   /**
@@ -1199,7 +1199,7 @@ export class EditProfileComponent implements OnInit {
 
   /**
    * @Function deleteImage
-   * @param imageName user/hospital --> image
+   * @param imageName user/org --> image
    *
    */
   async deleteImage(imageName) {
@@ -1215,8 +1215,8 @@ export class EditProfileComponent implements OnInit {
       var id = this.commonService.loggedInUser.id;
       if (imageName == "user") {
         this.deleteImageApi(id, this.userProfile.image, imageName);
-      } else if (imageName == "hospital") {
-        this.deleteImageApi(id, this.hospital_logo.logo_image, imageName);
+      } else if (imageName == "org") {
+        this.deleteImageApi(id, this.org_logo.logo_image, imageName);
       }
     }
   }
@@ -1232,14 +1232,14 @@ export class EditProfileComponent implements OnInit {
           this.userProfile.image = null;
           this.getCurrentUserData();
           this.updateLocalStorageImageNameLogo();
-        } else if (imageName == "hospital") {
-          this.hospital_logo.logo_image = null;
+        } else if (imageName == "org") {
+          this.org_logo.logo_image = null;
           this.getCurrentUserData();
           this.themeColor = {
             "--primary-color": this.userOldData.primary_color,
             "--secondary-color": this.userOldData.secondary_color,
             "--button-color": this.userOldData.button_color,
-            "hospital-image": ""
+            "org-image": ""
           };
           this.updateLocalStorageImageNameLogo();
           this.commonService.setDataInLocalStorageAndObservable(
@@ -1263,19 +1263,19 @@ export class EditProfileComponent implements OnInit {
       data.state_id = null;
       data.city_id = null;
     }
-    else if (callerName == 'hospital_state_id') {
-      data.hospital_state_id = null
-      data.hospital_city_id = null
+    else if (callerName == 'org_state_id') {
+      data.org_state_id = null
+      data.org_city_id = null
     }else if (callerName == 'clinic_state_id'){
       data.clinic_state_id = null
       data.clinic_city_id = null
     }
     if(userName=='User'){
     this.stateList = [];
-    this.stateListForHospital=[]
+    this.stateListFororg=[]
     }else{
     this.cityList = [];
-    this.cityListForHospital = [];
+    this.cityListFororg = [];
     }
     this.country_id = countryid;
     this.commonService
@@ -1287,7 +1287,7 @@ export class EditProfileComponent implements OnInit {
         if(userName=='User')
         this.stateList = res.result;
         else
-        this.stateListForHospital = res.result;
+        this.stateListFororg = res.result;
         
       })
       .catch(err => { });
@@ -1302,15 +1302,15 @@ export class EditProfileComponent implements OnInit {
 
     if (callerName == 'city_id')
       data.city_id = null;
-    else if (callerName == 'hospital_city_id')
-      data.hospital_city_id = null
+    else if (callerName == 'org_city_id')
+      data.org_city_id = null
       else if (callerName == 'clinic_city_id')
       data.clinic_city_id = null
     this.state_id = stateid;
     if(userName=='User')
     this.cityList = [];
     else
-    this.cityListForHospital=[]
+    this.cityListFororg=[]
     this.commonService
       .apiCall(this.apiListService.getAllCitiesByStateId, {
         id: this.commonService.loggedInUser.id,
@@ -1321,7 +1321,7 @@ export class EditProfileComponent implements OnInit {
         if(userName=='User')
         this.cityList = res.result;
         else
-        this.cityListForHospital = res.result;
+        this.cityListFororg = res.result;
       })
       .catch(err => { });
   }
@@ -1330,8 +1330,8 @@ export class EditProfileComponent implements OnInit {
 
   getAllData(value,data,callerName) {
     this.city_id = value.city_id;
-    if(callerName=='Hospital Admin')
-    data.hospital_zip_code = value.hospital_zip_code;
+    if(callerName=='org Admin')
+    data.org_zip_code = value.org_zip_code;
     else if(callerName=='EClinic Admin')
     data.clinic_zip_code = value.clinic_zip_code;
     else

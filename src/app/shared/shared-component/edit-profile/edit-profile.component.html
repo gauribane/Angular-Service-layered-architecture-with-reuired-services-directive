@@ -505,28 +505,28 @@
 			</div>
 		</mat-tab>
 
-		<mat-tab  [label]="this.commonService.loggedInUser.role_name =='Hospital Admin'? 'Health System Details':'E-Clinic Details'" *ngIf="this.commonService.loggedInUser.role_name =='Hospital Admin' || this.commonService.loggedInUser.role_name== 'eClinic Admin'">
+		<mat-tab  [label]="this.commonService.loggedInUser.role_name =='org Admin'? 'Health System Details':'E-Clinic Details'" *ngIf="this.commonService.loggedInUser.role_name =='org Admin' || this.commonService.loggedInUser.role_name== 'eClinic Admin'">
 			<div class="row">
 				<div class="edit-container-inner col-sm-12 mr-t30 mx-auto">
 					<div class="" *ngIf="userOldData">
-						<form [formGroup]="hospitaldetails" class="row" #hospitalRegistration *ngIf="this.commonService.loggedInUser.role_name =='Hospital Admin'">
+						<form [formGroup]="orgdetails" class="row" #orgRegistration *ngIf="this.commonService.loggedInUser.role_name =='org Admin'">
 							<div class="col-sm-4 mr-b50">
 								<div class="profile-box">
 									<div class="imgClass edit-p-box">
 										<div class="b-profile">
-											<img src="{{ hospital_logo?.logo_image || this.commonService.defaultLogoImage}}"
+											<img src="{{ org_logo?.logo_image || this.commonService.defaultLogoImage}}"
 												class="logoSize">
-											<div *ngIf="hospital_logo.logo_image" class="trash-icon-hospital" (click)="deleteimage.click()">
+											<div *ngIf="org_logo.logo_image" class="trash-icon-org" (click)="deleteimage.click()">
 												<i class="fa fa-trash" aria-hidden="true"></i>
 											</div>
 											<button data-toggle="modal" type="" #deleteimage
-												(click)="deleteImage('hospital')" hidden></button>
+												(click)="deleteImage('org')" hidden></button>
 										</div>
 									</div>
 									<div class="icon brs-btn mr-t50" (click)="crop.click()">
 										Upload
 										<i class="fa fa-camera" aria-hidden="true"></i>
-										<button data-toggle="modal" type="" #crop href="#hospitalImageCrop" class="edit"
+										<button data-toggle="modal" type="" #crop href="#orgImageCrop" class="edit"
 											hidden></button>
 									</div>
 
@@ -541,13 +541,13 @@
 											<mat-form-field class="d-block" appearance="outline">
 												
 												<input matInput class="" autocomplete="off" type="text" appAvoidSpace
-												(change)="flagSetAsUpdatedForHospital($event)"
+												(change)="flagSetAsUpdatedFororg($event)"
 												[formControl]="_name" [(ngModel)]="userOldData.name"
 													required [maxlength]="localDataService.HealthSystem.maxlength"
 													[minlength]="localDataService.HealthSystem.minlength">
 													<mat-error
 													>
-													<!-- *ngIf="(hospitaldetails.controls._name.touched || hospitaldetails.controls._name.dirty) && hospitaldetails.controls._name.errors" -->
+													<!-- *ngIf="(orgdetails.controls._name.touched || orgdetails.controls._name.dirty) && orgdetails.controls._name.errors" -->
 													<span *ngIf="_name.hasError('required')" >
 														{{localDataService.HealthSystem.requiredError}}
 													</span>
@@ -565,10 +565,10 @@
 										<!-- </div> -->
 										<!-- <div class="d-block">
 											<label>
-												Hospital name </label>
+												org name </label>
 											<mat-form-field class="formfield-full-width" appearance="outline">
 												<input matInput autocomplete="off" [(ngModel)]="userOldData.name"
-													(change)="flagSetAsUpdatedForHospital($event)"
+													(change)="flagSetAsUpdatedFororg($event)"
 													[formControl]="_name">
 											</mat-form-field>
 										</div> -->
@@ -591,9 +591,9 @@
 										<label>{{ localDataService.Address_Line1.label }}</label>
 										<mat-form-field class="formfield-full-width" appearance="outline">
 											<input matInput type="text" autocomplete="off"
-												[(ngModel)]="userOldData.hospital_address_line1"
-												[formControl]="hospital_address_line1" required>
-											<mat-error *ngIf="hospital_address_line1.hasError('required')">
+												[(ngModel)]="userOldData.org_address_line1"
+												[formControl]="org_address_line1" required>
+											<mat-error *ngIf="org_address_line1.hasError('required')">
 												{{ localDataService.Address_Line1.requiredError }}
 											</mat-error>
 										</mat-form-field>
@@ -602,24 +602,24 @@
 									<div class="col-sm-12">
 										<label>{{ localDataService.Address_Line2.label }}</label>
 										<mat-form-field class="formfield-full-width" appearance="outline">
-											<input matInput type="text" [(ngModel)]="userOldData.hospital_address_line2"
+											<input matInput type="text" [(ngModel)]="userOldData.org_address_line2"
 												placeholder="Address Line 2" autocomplete="off" value=""
-												[formControl]="hospital_address_line2">
+												[formControl]="org_address_line2">
 										</mat-form-field>
 									</div>
 									<div class="col-sm-12">
-										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length==0"  [formControl]="hospital_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.hospital_country_id" [(ngModel)]="userOldData.hospital_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'hospital_state_id','country',null)" ></app-single-mat-select-search-common>
-										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length!=0" [formControl]="hospital_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.hospital_country_id" [(ngModel)]="userOldData.hospital_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'hospital_state_id','country',null)" ></app-single-mat-select-search-common> 
+										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length==0"  [formControl]="org_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.org_country_id" [(ngModel)]="userOldData.org_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'org_state_id','country',null)" ></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length!=0" [formControl]="org_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.org_country_id" [(ngModel)]="userOldData.org_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'org_state_id','country',null)" ></app-single-mat-select-search-common> 
 									</div>
 
 									<div class="col-sm-12">
-										<app-single-mat-select-search-common *ngIf="stateListForHospital.length!=0"  [requiredFlag]="stateListForHospital.length==0?false:true" required="stateListForHospital.length==0?true:true" [caller]="true"   [formControl]="hospital_state" [disabledFlag]="stateListForHospital.length==0?true:false" [records]="stateListForHospital" [recordType]="'state'" [defaultValue]="userOldData.hospital_state_id" [(ngModel)]="userOldData.hospital_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'hospital_city_id','state',null)" ></app-single-mat-select-search-common>
-										<app-single-mat-select-search-common *ngIf="stateListForHospital.length==0"  [requiredFlag]="stateListForHospital.length==0?false:true" required="stateListForHospital.length==0?true:true" [caller]="true"   [formControl]="hospital_state" [disabledFlag]="stateListForHospital.length==0?true:false" [records]="stateListForHospital" [recordType]="'state'" [defaultValue]="userOldData.hospital_state_id" [(ngModel)]="userOldData.hospital_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'hospital_city_id','state',null)"></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="stateListFororg.length!=0"  [requiredFlag]="stateListFororg.length==0?false:true" required="stateListFororg.length==0?true:true" [caller]="true"   [formControl]="org_state" [disabledFlag]="stateListFororg.length==0?true:false" [records]="stateListFororg" [recordType]="'state'" [defaultValue]="userOldData.org_state_id" [(ngModel)]="userOldData.org_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'org_city_id','state',null)" ></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="stateListFororg.length==0"  [requiredFlag]="stateListFororg.length==0?false:true" required="stateListFororg.length==0?true:true" [caller]="true"   [formControl]="org_state" [disabledFlag]="stateListFororg.length==0?true:false" [records]="stateListFororg" [recordType]="'state'" [defaultValue]="userOldData.org_state_id" [(ngModel)]="userOldData.org_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'org_city_id','state',null)"></app-single-mat-select-search-common>
 									</div>
 
 									<div class="col-sm-12">
-										<app-single-mat-select-search-common *ngIf="cityListForHospital.length!=0" [caller]="true"   [formControl]="hospital_city"  [disabledFlag]="cityListForHospital.length==0?true:false"  [requiredFlag]="cityListForHospital.length==0?false:true" required="cityListForHospital.length==0?false:true" [records]="cityListForHospital" [recordType]="'city'" [defaultValue]="userOldData.hospital_city_id" [(ngModel)]="userOldData.hospital_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'hospital_city_id','city',null)"></app-single-mat-select-search-common>
-										<app-single-mat-select-search-common *ngIf="cityListForHospital.length==0"  [caller]="true"   [formControl]="hospital_city"  [disabledFlag]="cityListForHospital.length==0?true:false"  [requiredFlag]="cityListForHospital.length==0?false:true" required="cityListForHospital.length==0?false:true" [records]="cityListForHospital" [recordType]="'city'" [defaultValue]="userOldData.hospital_city_id" [(ngModel)]="userOldData.hospital_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'hospital_city_id','city',null)"></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="cityListFororg.length!=0" [caller]="true"   [formControl]="org_city"  [disabledFlag]="cityListFororg.length==0?true:false"  [requiredFlag]="cityListFororg.length==0?false:true" required="cityListFororg.length==0?false:true" [records]="cityListFororg" [recordType]="'city'" [defaultValue]="userOldData.org_city_id" [(ngModel)]="userOldData.org_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'org_city_id','city',null)"></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="cityListFororg.length==0"  [caller]="true"   [formControl]="org_city"  [disabledFlag]="cityListFororg.length==0?true:false"  [requiredFlag]="cityListFororg.length==0?false:true" required="cityListFororg.length==0?false:true" [records]="cityListFororg" [recordType]="'city'" [defaultValue]="userOldData.org_city_id" [(ngModel)]="userOldData.org_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'org_city_id','city',null)"></app-single-mat-select-search-common>
 									
 									</div>
 							
@@ -627,10 +627,10 @@
 										<label>{{localDataService.Landline.label}}</label>
 										<mat-form-field class="d-block flag-span-wrap" appearance="outline">
 										  
-										  <span matPrefix class="prefix-align flag-span" title="{{getData(userOldData.hospital_country_id)?.phone_code}}">
-											<span class="flag-icon flag-icon-{{ getData(userOldData.hospital_country_id)?.iso2 | lowercase}}">
+										  <span matPrefix class="prefix-align flag-span" title="{{getData(userOldData.org_country_id)?.phone_code}}">
+											<span class="flag-icon flag-icon-{{ getData(userOldData.org_country_id)?.iso2 | lowercase}}">
 											</span>
-											{{getData(userOldData.hospital_country_id)?.iso2}}
+											{{getData(userOldData.org_country_id)?.iso2}}
 											
 							
 										  </span>
@@ -638,20 +638,20 @@
 										  <input matInput class="" autocomplete="off" type="text"
 											[placeholder]="localDataService.Landline.placeholder" appAvoidCharacter [maxlength]="localDataService.Landline.maxlength"
 											[minlength]="localDataService.Landline.minlength" [pattern]="localDataService.Landline.pattern"
-											(ngModelChange)="userOldData.hospital_landline=maskLandlineNumber($event)"
-											[formControl]="hospital_landline" [ngModel]="userOldData.hospital_landline">
+											(ngModelChange)="userOldData.org_landline=maskLandlineNumber($event)"
+											[formControl]="org_landline" [ngModel]="userOldData.org_landline">
 										  <mat-error
 											>
-											<span *ngIf="hospital_landline.hasError(required)">
+											<span *ngIf="org_landline.hasError(required)">
 											  {{localDataService.Landline.requiredError}}
 											</span>
-											<span *ngIf="hospital_landline.hasError(minlength)">
+											<span *ngIf="org_landline.hasError(minlength)">
 											  {{localDataService.Landline.minlengthError}}
 											</span>
-											<span *ngIf="hospital_landline.hasError(maxlength)">
+											<span *ngIf="org_landline.hasError(maxlength)">
 											  {{localDataService.Landline.maxlengthError}}
 											</span>
-											<span *ngIf="hospital_landline.hasError(pattern)">
+											<span *ngIf="org_landline.hasError(pattern)">
 											  {{localDataService.Landline.patternError}}
 											</span>
 										  </mat-error>
@@ -693,10 +693,10 @@
 									<div class="col-sm-12">
 										<label>{{localDataService.Faxnumber.label}}</label>
 										<mat-form-field class="d-block flag-span-wrap" appearance="outline">
-											<span matPrefix class="prefix-align flag-span" title="{{getData(userOldData.hospital_country_id)?.phone_code}}">
-												<span class="flag-icon flag-icon-{{ getData(userOldData.hospital_country_id)?.iso2 | lowercase}}">
+											<span matPrefix class="prefix-align flag-span" title="{{getData(userOldData.org_country_id)?.phone_code}}">
+												<span class="flag-icon flag-icon-{{ getData(userOldData.org_country_id)?.iso2 | lowercase}}">
 												</span>
-												{{getData(userOldData.hospital_country_id)?.iso2}}
+												{{getData(userOldData.org_country_id)?.iso2}}
 												
 											  </span>
 											<input matInput class="" autocomplete="off" type="text" [maxlength]="localDataService.Faxnumber.maxlength"
@@ -724,7 +724,7 @@
 									<div class="col-sm-3">
 										<div class="d-block">
 											<label> Primary Colour </label>
-											<input (change)="flagSetAsUpdatedForHospital()"
+											<input (change)="flagSetAsUpdatedFororg()"
 												[(colorPicker)]="old_primary_color"
 												[style.background]="old_primary_color"
 												(cpInputChange)="setPrimaryColor('cpInputChange', $event)"
@@ -736,7 +736,7 @@
 									<div class="col-sm-3">
 										<div class="d-block">
 											<label> Secondary Colour </label>
-											<input (change)="flagSetAsUpdatedForHospital()"
+											<input (change)="flagSetAsUpdatedFororg()"
 												[(colorPicker)]="old_secondary_color"
 												[style.background]="old_secondary_color"
 												(cpInputChange)="setSecondaryColor('cpInputChange', $event)"
@@ -748,7 +748,7 @@
 									<div class="col-sm-3">
 										<div class="d-block">
 											<label> Text Colour </label>
-											<input (change)="flagSetAsUpdatedForHospital()"
+											<input (change)="flagSetAsUpdatedFororg()"
 												[(colorPicker)]="old_text_color" [style.background]="old_text_color"
 												(cpInputChange)="setTextColor('cpInputChange', $event)"
 												(cpSliderDragStart)="setTextColor('cpSliderDragStart', $event)"
@@ -760,9 +760,9 @@
 
 									<div class="col-sm-12 pd-t20">
 										<div class="text-center">
-											<button type="submit" class="blue-btn hospital-update pd-l30 pd-r30"
-												(click)="editHospitalDetails(hospitaldetails)"
-												[disabled]="!hospitaldetails.valid">
+											<button type="submit" class="blue-btn org-update pd-l30 pd-r30"
+												(click)="editorgDetails(orgdetails)"
+												[disabled]="!orgdetails.valid">
 												Update
 											</button>
 										</div>
@@ -770,24 +770,24 @@
 								</div>
 							</div>
 						</form>
-						<form [formGroup]="hospitaldetails" class="row" #hospitalRegistration *ngIf="this.commonService.loggedInUser.role_name =='eClinic Admin'">
+						<form [formGroup]="orgdetails" class="row" #orgRegistration *ngIf="this.commonService.loggedInUser.role_name =='eClinic Admin'">
 							<div class="col-sm-4 mr-b50">
 								<div class="profile-box">
 									<div class="imgClass edit-p-box">
 										<div class="b-profile">
-											<img src="{{ hospital_logo?.logo_image || this.commonService.defaultLogoImage}}"
+											<img src="{{ org_logo?.logo_image || this.commonService.defaultLogoImage}}"
 												class="logoSize">
-											<div *ngIf="hospital_logo.logo_image" class="trash-icon-hospital" (click)="deleteimage.click()">
+											<div *ngIf="org_logo.logo_image" class="trash-icon-org" (click)="deleteimage.click()">
 												<i class="fa fa-trash" aria-hidden="true"></i>
 											</div>
 											<button data-toggle="modal" type="" #deleteimage
-												(click)="deleteImage('hospital')" hidden></button>
+												(click)="deleteImage('org')" hidden></button>
 										</div>
 									</div>
 									<div class="icon brs-btn mr-t50" (click)="crop.click()">
 										Upload
 										<i class="fa fa-camera" aria-hidden="true"></i>
-										<button data-toggle="modal" type="" #crop href="#hospitalImageCrop" class="edit"
+										<button data-toggle="modal" type="" #crop href="#orgImageCrop" class="edit"
 											hidden></button>
 									</div>
 
@@ -802,13 +802,13 @@
 											<mat-form-field class="d-block" appearance="outline">
 												
 												<input matInput class="" autocomplete="off" type="text" appAvoidSpace
-												(change)="flagSetAsUpdatedForHospital($event)"
+												(change)="flagSetAsUpdatedFororg($event)"
 												[formControl]="_name" [(ngModel)]="userOldData.clinic_name"
 													required [maxlength]="localDataService.HealthSystem.maxlength"
 													[minlength]="localDataService.HealthSystem.minlength">
 													<mat-error
 													>
-													<!-- *ngIf="(hospitaldetails.controls._name.touched || hospitaldetails.controls._name.dirty) && hospitaldetails.controls._name.errors" -->
+													<!-- *ngIf="(orgdetails.controls._name.touched || orgdetails.controls._name.dirty) && orgdetails.controls._name.errors" -->
 													<span *ngIf="_name.hasError('required')" >
 														{{localDataService.HealthSystem.requiredError}}
 													</span>
@@ -826,10 +826,10 @@
 										<!-- </div> -->
 										<!-- <div class="d-block">
 											<label>
-												Hospital name </label>
+												org name </label>
 											<mat-form-field class="formfield-full-width" appearance="outline">
 												<input matInput autocomplete="off" [(ngModel)]="userOldData.name"
-													(change)="flagSetAsUpdatedForHospital($event)"
+													(change)="flagSetAsUpdatedFororg($event)"
 													[formControl]="_name">
 											</mat-form-field>
 										</div> -->
@@ -853,8 +853,8 @@
 										<mat-form-field class="formfield-full-width" appearance="outline">
 											<input matInput type="text" autocomplete="off"
 												[(ngModel)]="userOldData.clinic_address_line1"
-												[formControl]="hospital_address_line1" required>
-											<mat-error *ngIf="hospital_address_line1.hasError('required')">
+												[formControl]="org_address_line1" required>
+											<mat-error *ngIf="org_address_line1.hasError('required')">
 												{{ localDataService.Address_Line1.requiredError }}
 											</mat-error>
 										</mat-form-field>
@@ -865,7 +865,7 @@
 										<mat-form-field class="formfield-full-width" appearance="outline">
 											<input matInput type="text" [(ngModel)]="userOldData.clinic_address_line2"
 												placeholder="Address Line 2" autocomplete="off" value=""
-												[formControl]="hospital_address_line2">
+												[formControl]="org_address_line2">
 										</mat-form-field>
 									</div>
 
@@ -873,18 +873,18 @@
 
 									
 									<div class="col-sm-12">
-										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length==0"  [formControl]="hospital_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.clinic_country_id" [(ngModel)]="userOldData.clinic_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'clinic_state_id','country',null)" ></app-single-mat-select-search-common>
-										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length!=0" [formControl]="hospital_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.clinic_country_id" [(ngModel)]="userOldData.clinic_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'clinic_state_id','country',null)" ></app-single-mat-select-search-common> 
+										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length==0"  [formControl]="org_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.clinic_country_id" [(ngModel)]="userOldData.clinic_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'clinic_state_id','country',null)" ></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common [caller]="true" *ngIf="countryList.length!=0" [formControl]="org_country" [requiredFlag]="true" required="true" [disabledFlag]="countryList.length==0?true:false"  [records]="countryList" [recordType]="'country'" [defaultValue]="userOldData.clinic_country_id" [(ngModel)]="userOldData.clinic_country_id" [recordName]="'country_name'" [recordId]="'id'" [dropdownLabelError]="localDataService.Country"  [dropdownPlaceHolder]="'Search Country'"  (clicked)="OnChanged($event,userOldData,'clinic_state_id','country',null)" ></app-single-mat-select-search-common> 
 									</div>
 
 									<div class="col-sm-12">
-										<app-single-mat-select-search-common *ngIf="stateListForHospital.length!=0"  [requiredFlag]="stateListForHospital.length==0?false:true" required="stateListForHospital.length==0?true:true" [caller]="true"   [formControl]="hospital_state" [disabledFlag]="stateListForHospital.length==0?true:false" [records]="stateListForHospital" [recordType]="'state'" [defaultValue]="userOldData.clinic_state_id" [(ngModel)]="userOldData.clinic_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'clinic_city_id','state',null)" ></app-single-mat-select-search-common>
-										<app-single-mat-select-search-common *ngIf="stateListForHospital.length==0"  [requiredFlag]="stateListForHospital.length==0?false:true" required="stateListForHospital.length==0?true:true" [caller]="true"   [formControl]="hospital_state" [disabledFlag]="stateListForHospital.length==0?true:false" [records]="stateListForHospital" [recordType]="'state'" [defaultValue]="userOldData.clinic_state_id" [(ngModel)]="userOldData.clinic_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'clinic_city_id','state',null)"></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="stateListFororg.length!=0"  [requiredFlag]="stateListFororg.length==0?false:true" required="stateListFororg.length==0?true:true" [caller]="true"   [formControl]="org_state" [disabledFlag]="stateListFororg.length==0?true:false" [records]="stateListFororg" [recordType]="'state'" [defaultValue]="userOldData.clinic_state_id" [(ngModel)]="userOldData.clinic_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'clinic_city_id','state',null)" ></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="stateListFororg.length==0"  [requiredFlag]="stateListFororg.length==0?false:true" required="stateListFororg.length==0?true:true" [caller]="true"   [formControl]="org_state" [disabledFlag]="stateListFororg.length==0?true:false" [records]="stateListFororg" [recordType]="'state'" [defaultValue]="userOldData.clinic_state_id" [(ngModel)]="userOldData.clinic_state_id" [recordName]="'state_name'" [recordId]="'state_id'" [dropdownLabelError]="localDataService.State"  [dropdownPlaceHolder]="'Search State'"  (clicked)="OnChanged($event,userOldData,'clinic_city_id','state',null)"></app-single-mat-select-search-common>
 									</div>
 
 									<div class="col-sm-12">
-										<app-single-mat-select-search-common *ngIf="cityListForHospital.length!=0" [caller]="true"   [formControl]="hospital_city"  [disabledFlag]="cityListForHospital.length==0?true:false"  [requiredFlag]="cityListForHospital.length==0?false:true" required="cityListForHospital.length==0?false:true" [records]="cityListForHospital" [recordType]="'city'" [defaultValue]="userOldData.clinic_city_id" [(ngModel)]="userOldData.clinic_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'clinic_city_id','city',null)"></app-single-mat-select-search-common>
-										<app-single-mat-select-search-common *ngIf="cityListForHospital.length==0"  [caller]="true"   [formControl]="hospital_city"  [disabledFlag]="cityListForHospital.length==0?true:false"  [requiredFlag]="cityListForHospital.length==0?false:true" required="cityListForHospital.length==0?false:true" [records]="cityListForHospital" [recordType]="'city'" [defaultValue]="userOldData.clinic_city_id" [(ngModel)]="userOldData.clinic_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'clinic_city_id','city',null)"></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="cityListFororg.length!=0" [caller]="true"   [formControl]="org_city"  [disabledFlag]="cityListFororg.length==0?true:false"  [requiredFlag]="cityListFororg.length==0?false:true" required="cityListFororg.length==0?false:true" [records]="cityListFororg" [recordType]="'city'" [defaultValue]="userOldData.clinic_city_id" [(ngModel)]="userOldData.clinic_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'clinic_city_id','city',null)"></app-single-mat-select-search-common>
+										<app-single-mat-select-search-common *ngIf="cityListFororg.length==0"  [caller]="true"   [formControl]="org_city"  [disabledFlag]="cityListFororg.length==0?true:false"  [requiredFlag]="cityListFororg.length==0?false:true" required="cityListFororg.length==0?false:true" [records]="cityListFororg" [recordType]="'city'" [defaultValue]="userOldData.clinic_city_id" [(ngModel)]="userOldData.clinic_city_id" [recordName]="'city_name'" [recordId]="'city_id'" [dropdownLabelError]="localDataService.City"  [dropdownPlaceHolder]="'Search City'" (clicked)="OnChanged($event,userOldData,'clinic_city_id','city',null)"></app-single-mat-select-search-common>
 									
 									</div>
 							
@@ -905,19 +905,19 @@
 											[placeholder]="localDataService.Landline.placeholder" appAvoidCharacter [maxlength]="localDataService.Landline.maxlength"
 											[minlength]="localDataService.Landline.minlength" [pattern]="localDataService.Landline.pattern"
 											(ngModelChange)="userOldData.clinic_landline=maskLandlineNumber($event)"
-											[formControl]="hospital_landline" [ngModel]="userOldData.clinic_landline">
+											[formControl]="org_landline" [ngModel]="userOldData.clinic_landline">
 										  <mat-error
 											>
-											<span *ngIf="hospital_landline.hasError(required)">
+											<span *ngIf="org_landline.hasError(required)">
 											  {{localDataService.Landline.requiredError}}
 											</span>
-											<span *ngIf="hospital_landline.hasError(minlength)">
+											<span *ngIf="org_landline.hasError(minlength)">
 											  {{localDataService.Landline.minlengthError}}
 											</span>
-											<span *ngIf="hospital_landline.hasError(maxlength)">
+											<span *ngIf="org_landline.hasError(maxlength)">
 											  {{localDataService.Landline.maxlengthError}}
 											</span>
-											<span *ngIf="hospital_landline.hasError(pattern)">
+											<span *ngIf="org_landline.hasError(pattern)">
 											  {{localDataService.Landline.patternError}}
 											</span>
 										  </mat-error>
@@ -990,7 +990,7 @@
 									<div class="col-sm-3">
 										<div class="d-block">
 											<label> Primary Colour </label>
-											<input (change)="flagSetAsUpdatedForHospital()"
+											<input (change)="flagSetAsUpdatedFororg()"
 												[(colorPicker)]="old_primary_color"
 												[style.background]="old_primary_color"
 												(cpInputChange)="setPrimaryColor('cpInputChange', $event)"
@@ -1002,7 +1002,7 @@
 									<div class="col-sm-3">
 										<div class="d-block">
 											<label> Secondary Colour </label>
-											<input (change)="flagSetAsUpdatedForHospital()"
+											<input (change)="flagSetAsUpdatedFororg()"
 												[(colorPicker)]="old_secondary_color"
 												[style.background]="old_secondary_color"
 												(cpInputChange)="setSecondaryColor('cpInputChange', $event)"
@@ -1014,7 +1014,7 @@
 									<div class="col-sm-3">
 										<div class="d-block">
 											<label> Text Colour </label>
-											<input (change)="flagSetAsUpdatedForHospital()"
+											<input (change)="flagSetAsUpdatedFororg()"
 												[(colorPicker)]="old_text_color" [style.background]="old_text_color"
 												(cpInputChange)="setTextColor('cpInputChange', $event)"
 												(cpSliderDragStart)="setTextColor('cpSliderDragStart', $event)"
@@ -1026,9 +1026,9 @@
 
 									<div class="col-sm-12 pd-t20">
 										<div class="text-center">
-											<button type="submit" class="blue-btn hospital-update pd-l30 pd-r30"
-												(click)="editHospitalDetails(hospitaldetails)"
-												[disabled]="!hospitaldetails.valid">
+											<button type="submit" class="blue-btn org-update pd-l30 pd-r30"
+												(click)="editorgDetails(orgdetails)"
+												[disabled]="!orgdetails.valid">
 												Update
 											</button>
 										</div>
@@ -1122,7 +1122,7 @@
 	</div>
 </div>
 
-<div class="modal fade bd-example-modal-lg" id="hospitalImageCrop" tabindex="-1" role="dialog"
+<div class="modal fade bd-example-modal-lg" id="orgImageCrop" tabindex="-1" role="dialog"
 	aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-backdrop="static"
 	data-keyboard="false">
 	<div class="modal-dialog upload-modal modal-lg" role="document">
@@ -1134,18 +1134,18 @@
 						<h3 class="modal-title"> Upload </h3>
 						<hr>
 						<div class="upload-box-wrap">
-							<div class="upload-box" [hidden]="hospitalCropData.logo_image"
+							<div class="upload-box" [hidden]="orgCropData.logo_image"
 								(click)="fileUpload1.click()">
 								<div class="img-block text-center">
 									<img src="/assets/images/cloud-storage.png" alt="">
-									<h4>Browse Your Files Hospital Logo</h4>
+									<h4>Browse Your Files org Logo</h4>
 									<!-- accept="image/*" -->
 									<input class="edit" #fileUpload1 type='file'  accept="image/jpeg, image/png"
-										(change)="onSelectHospitalLogo($event)" hidden>
+										(change)="onSelectorgLogo($event)" hidden>
 								</div>
 							</div>
 							<div class="cropper-wrap">
-								<image-cropper *ngIf="hospitalCropData.logo_image"
+								<image-cropper *ngIf="orgCropData.logo_image"
 									[imageChangedEvent]="imageChangedEvent1" [maintainAspectRatio]="false"
 									[resizeToWidth]="0" (imageCropped)="imageCropped1($event)">
 								</image-cropper>
@@ -1157,8 +1157,8 @@
 					<div class="offset-sm-1 col-sm-6">
 						<h3 class="modal-title"> Preview </h3>
 						<hr>
-						<span class="result rounded" *ngIf="hospitalCropData.logo_image">
-							<img class="image-preview-update-hospital-logo" [src]="hospitalCropData.logo_image" />
+						<span class="result rounded" *ngIf="orgCropData.logo_image">
+							<img class="image-preview-update-org-logo" [src]="orgCropData.logo_image" />
 						</span>
 					</div>
 				</div>
@@ -1166,10 +1166,10 @@
 				<div class="col-sm-12 text-center mr-t30 mr-b20">
 					<button class="c-blue-btn" (click)="getImageData()" data-dismiss="modal"
 						aria-label="Close">Crop</button>
-					<button class="c-blue-btn mr-l10 mr-r10" (click)="close('hospital')" data-dismiss="modal"
+					<button class="c-blue-btn mr-l10 mr-r10" (click)="close('org')" data-dismiss="modal"
 						aria-label="Close">
 						Cancel </button>
-					<button class="c-blue-btn" *ngIf="hospitalCropData.logo_image" (click)="fileUpload1.click()"> Browse
+					<button class="c-blue-btn" *ngIf="orgCropData.logo_image" (click)="fileUpload1.click()"> Browse
 						image
 					</button>
 				</div>

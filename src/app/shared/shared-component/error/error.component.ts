@@ -20,8 +20,8 @@ export class ErrorComponent implements OnInit {
       case 'Super Admin' :
           this.router.navigate(['/superadmin/dashboard']);
           break;
-      case 'Hospital Admin' :
-              this.router.navigate(['/hospitaladmin/dashboard']);
+      case 'org Admin' :
+              this.router.navigate(['/orgadmin/dashboard']);
               break;
       case 'Provider' :
           this.router.navigate(['/provider/provider-dashboard']);

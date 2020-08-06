@@ -40,7 +40,7 @@ export class ShowUserProfileComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    // this.LoggedInUser = JSON.parse(localStorage.getItem('userOfKardio'));
+    // this.LoggedInUser = JSON.parse(localStorage.getItem('userOfOrg'));
     this.route.params.subscribe(params => {
       this.provider_Id = params.id;
       // //console.log("Params...", params.id);

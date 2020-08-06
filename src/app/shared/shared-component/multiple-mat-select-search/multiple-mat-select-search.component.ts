@@ -15,7 +15,7 @@ import { LocalDataService } from 'src/app/_services/local-data.service';
   selector: 'app-multiple-mat-select-search',
   templateUrl: './multiple-mat-select-search.component.html',
   styleUrls: ['./multiple-mat-select-search.component.scss'],
-  inputs:['callerName','splittedHospitalArrayClone','multipleFlag','disabledFlag','requiredFlag','records','recordType','defaultValue','recordName','recordId','dropdownLabelError','dropdownPlaceHolder'],
+  inputs:['callerName','splittedorgArrayClone','multipleFlag','disabledFlag','requiredFlag','records','recordType','defaultValue','recordName','recordId','dropdownLabelError','dropdownPlaceHolder'],
   providers:[
     {
       provide:NG_VALUE_ACCESSOR,
@@ -41,7 +41,7 @@ export class MultipleMatSelectSearchComponent implements OnInit, AfterViewInit, 
   public defaultValue:any;
   public requiredFlag:any;
   public multipleFlag:any;
-  public splittedHospitalArrayClone:any;
+  public splittedorgArrayClone:any;
   public callerName:any;
   // public requiredError:any;
   /** control for the selected bank */
@@ -96,14 +96,14 @@ export class MultipleMatSelectSearchComponent implements OnInit, AfterViewInit, 
     this.disabled=isDisabled;
   }
 
-  Onchanged(event,hospital_id){
+  Onchanged(event,org_id){
     debugger;
     console.log("event in Onchanged",event)
-    console.log("actevent in Onchanged",hospital_id)
+    console.log("actevent in Onchanged",org_id)
     console.log("value in Onchanged",this.value)
     // if(this.multipleFlag)
     if(event[0] || event )
- this.clicked.emit({event:event,hospital_id:hospital_id});
+ this.clicked.emit({event:event,org_id:org_id});
  else 
  return;
 //  else
@@ -111,17 +111,17 @@ export class MultipleMatSelectSearchComponent implements OnInit, AfterViewInit, 
   }
 
     /**
-   * Disable already selected hospital
-   * @param hospital_id 
+   * Disable already selected org
+   * @param org_id 
    */
-  chkForDisabled(hospital_id) {
-    // hospital_id
+  chkForDisabled(org_id) {
+    // org_id
     // debugger;
     
     if (this.callerName && this.callerName == 'edit')
       return false;
-    var temp = this.splittedHospitalArrayClone.filter(obj => {
-      return (obj === hospital_id ? true : false)
+    var temp = this.splittedorgArrayClone.filter(obj => {
+      return (obj === org_id ? true : false)
     })
     if (temp.length != 0)
       return true;

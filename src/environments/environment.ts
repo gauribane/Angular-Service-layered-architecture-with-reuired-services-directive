@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  API_URL: 'Local API Url',
+  Encryption_Key:"Copy encryption key"
 };
 
 /*

@@ -66,13 +66,9 @@ export class ApiService {
     return this.http.post(this.baseUrl + encryptedApi,encryptedData, { headers: headers, observe: 'response' })
     // return this.http.post(this.baseUrl + apiName,data, { headers: headers, observe: 'response' })
       .pipe(map((data: HttpResponse<any>) => {
-        // //console.log("Data",data)
         var decryptedData;
-        // if(Config.production)
           decryptedData= this.cryptoService.decryptData(data.body.encrypted_res);
-        // else
-           //decryptedData=data.body
-        //console.log("decryptedData",decryptedData)
+     
         if (decryptedData.status.code != '00') {
           return decryptedData;
         }
@@ -89,12 +85,7 @@ export class ApiService {
       }));
   }
 
-  postmapQuestURL(data) {
-    return this.http.post('http://www.mapquestapi.com/geocoding/v1/address?key=vTzljFbQJWzpZPk3pdpGObCHRSDyPMqp', data)
-      .pipe(map((data: HttpResponse<any>) => {
-        return data;
-      }));
-  }
+
 
 }
 

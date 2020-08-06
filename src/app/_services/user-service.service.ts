@@ -13,10 +13,7 @@ export class UserServiceService {
     null
   );
   notifyToAll = this.notifyHighAlert.asObservable();
-  // selectedThemeColor = this.selectedTheme.asObservable();
-  // private selectedTheme: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
-  // public title = new Subject<string>();
-  // private dataSource = new BehaviorSubject<SnapshotSelection>(new Data());
+  
 
   constructor() {}
 

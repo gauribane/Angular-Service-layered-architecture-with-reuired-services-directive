@@ -4,9 +4,8 @@ import { Injectable } from "@angular/core";
   providedIn: "root"
 })
 export class LocalDataService {
-  tabarray = [{id:1,name:'Health System Management'}, {id:2,name:'Provider Management'}, {id:3,name:'Patient Management'}, {id:4,name:'Hospital Location'},{id:5,name:'E-Clinic Management'}];
-  // tabArrayForEconsultant=[{id:6,name:'PCP User Management'}]
-  tabarrayForHospitalAdmin = [{id:2,name:'Provider Management'}, {id:3,name:'Patient Management'}];
+  tabarray = [{id:1,name:'tab1'}, {id:2,name:'tab2'}, {id:3,name:'tab3'}];
+ 
   todaydate: Date = new Date();
 
   defaultCountry=233;
@@ -179,37 +178,6 @@ export class LocalDataService {
     NoDatalabel:"No Data"
   };
 
-  Hcpa = {
-    label: "Name of Health Care Power Attorney",
-    placeholder:"Name of Health Care Power Attorney",
-    maxlength:"30",
-    minlength:'1',
-    pattern: new RegExp("^[-a-zA-Z-()].+(\\s[-a-zA-Z-()].+(?:(?!\\s{1,30})))*$"),
-    patternError: "Invalid name",
-    maxlengthError: "Max 30 characters",
-    minlengthError: "Min 1 characters",
-    requiredError: "Fullname is required"
-  }
-
-  APRN={
-    label: "Select APRN",
-    requiredError: "APRN is required",
-    NoDatalabel:"No Data"
-  }
-
-  Cardiologist={
-    label: "Select Cardiologist",
-    requiredError: "Cardiologist is required",
-    NoDatalabel:"No Data"
-  }
-
-  addPatientHospital={
-    label: "Name of the Hospital, Treating Cardiologist Associated With",
-    requiredError: "health System is required",
-    NoDatalabel:"No Data"
-  }
-
-  
 
   getErrorPassword = {
     requiredError:
@@ -273,31 +241,6 @@ export class LocalDataService {
     NoDatalabel:"No Data"
   };
 
-  Hospitalname = {
-    label: "Hospital Name",
-    placeholder: "Enter Hospital name",
-    maxlength: 254,
-    minlength: 1,
-    pattern: new RegExp("^[-a-zA-Z-()]+(\\s[-a-zA-Z-()]+(?:(?!\\s{2,})))*$"),
-    patternError: "Invalid Hospital Name",
-    maxlengthError: "Max 254 characters",
-    minlengthError: "Min 1 characters",
-    requiredError: "Hospital Name is required"
-  };
-
-  HealthSystem = {
-    label: "Health System",
-    placeholder: "Enter Health System",
-    maxlength: 50,
-    minlength: 1,
-    pattern: new RegExp("^[-a-zA-Z-()]+(\\s[-a-zA-Z-()]+(?:(?!\\s{2,})))*$"),
-    patternError: "Invalid Health System Name",
-    maxlengthError: "Max 50 characters",
-    minlengthError: "Min 1 characters",
-    requiredError: "Health System is required",
-    NoDatalabel:"No Data"
-  };
-
   Height = {
     label: "Height",
     placeholder: "Enter Height",
@@ -338,34 +281,10 @@ export class LocalDataService {
     requiredError: "Date of birth required"
   };
 
-  Admitted_date = {
-    label: "Addmitted Date",
-    placeholder: "Addmitted on",
-    pattern: new RegExp("[0-9]{2}[/][0-9]{2}[/][0-9]{4}"),
-    patternError: "Invalid date format",
-    requiredError: "Addmitted date required"
-  };
-
-  Discharged_date = {
-    label: "Addmitted Date",
-    placeholder: "Discharged on",
-    pattern: new RegExp("[0-9]{2}/[0-9]{2}/[0-9]{4}"),
-    patternError: "Invalid date format",
-    requiredError: "Discharged date required"
-  };
-
-  
 
   address = {
     label: "Hospital Address",
     requiredError: "Hospital Address is required"
-  };
-
-  HealthSystemAddress = {
-    label: "Health System Address",
-    placeholder: "Enter Health System Address",
-    requiredError: "Health System Address is required"
-    
   };
 
   Address_Line1 = {
@@ -387,19 +306,6 @@ export class LocalDataService {
     NoDatalabel:"No countries"
   };
 
-  Medicine:any={
-    label:"Select Medicine",
-    placeholder: "Enter Medicine",
-    requiredError: "Medicine is required",
-    NoDatalabel:"No medicines"
-  }
-
-  Patient={
-    label:"Select Patient",
-    placeholder: "Search Patient",
-    requiredError:"Patient is required",
-    NoDatalabel:"No patients"
-  }
 
   State = {
     label: "Select State",
@@ -415,19 +321,6 @@ export class LocalDataService {
     NoDatalabel:"No cities"
   };
 
-  PCPClinic = {
-    label: "PCP Clinic",
-    placeholder: "Enter PCP Clinic",
-    maxlength: 254,
-    minlength: 1,
-    pattern: new RegExp("^[-a-zA-Z-()]+(\\s[-a-zA-Z-()]+(?:(?!\\s{2,})))*$"),
-    patternError: "Invalid PCP Clinic Name",
-    maxlengthError: "Max 254 characters",
-    minlengthError: "Min 1 characters",
-    requiredError: "PCP Clinic is required"
-  };
-
- 
 
   /**
    *  @AUTO_LOGOUT_IDLE_TIMER auto logout idel time
